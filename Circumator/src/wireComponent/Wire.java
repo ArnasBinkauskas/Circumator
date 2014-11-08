@@ -1,3 +1,5 @@
+package wireComponent;
+
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -6,9 +8,9 @@ public class Wire {
 	private WNode start;
 	private WNode end;
 	private ArrayList<Point2D> wireCords;
-	
-	
-	public Wire(String wireID, WNode Start, WNode End, ArrayList<Point2D> WireCords){
+
+	public Wire(String wireID, WNode Start, WNode End,
+			ArrayList<Point2D> WireCords) {
 		start = Start;
 		end = End;
 		wireCords.add(start.getCords());
