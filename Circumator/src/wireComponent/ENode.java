@@ -20,7 +20,12 @@ public class ENode extends WNode {
 	}
 	
 	public boolean plugTo(LogicComponent n, String in_name){
-		
+		if (n.plugInput(this, in_name)){
+			pluged_to = n;
+			input_name = in_name;
+			return true;
+		}
+		else return false;
 	}
 }
 

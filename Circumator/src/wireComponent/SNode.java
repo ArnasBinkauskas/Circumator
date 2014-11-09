@@ -18,4 +18,14 @@ public class SNode extends WNode {
 		nodeID = ID;
 		signal_value = new Signal();
 	}
+	
+	
+	public boolean plugTo(LogicComponent n, String out_name){
+		if (n.plugOutput(this, out_name)){
+			pluged_to = n;
+			output_name = out_name;
+			return true;
+		}
+		else return false;
+	}
 }
