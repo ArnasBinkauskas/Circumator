@@ -5,8 +5,8 @@ import wireComponent.*;
 //All Components will have a Node input with a meaningful name
 //Input and output names MUST be different
 public abstract class LogicComponent {
-	Map<String, WNode> input; 
-	Map<String, WNode> output;
+	Map<String, ENode> input; 
+	Map<String, SNode> output;
 
 	/**@TODO 
 	 * Implement to show signals on inputs and outputs
@@ -19,11 +19,11 @@ public abstract class LogicComponent {
 		return ans;
 	}
 	
-	public Map<String, WNode> getInput(){
+	public Map<String, ENode> getInput(){
 		return input;
 	}
 	
-	public Map<String, WNode> getOutput(){
+	public Map<String, SNode> getOutput(){
 		return output;
 	}
 	
@@ -31,7 +31,7 @@ public abstract class LogicComponent {
 	/**
 	 * Tries to plug the node given to an input specified.
 	 * Returns False if the Logic component doesn't have an input named "in_name"
-	 * True if successfull
+	 * True if successful
 	 * */
 	public boolean plugInput(ENode n, String in_name){
 		if (input.get(in_name) != null){
@@ -44,11 +44,11 @@ public abstract class LogicComponent {
 	/**
 	 * Tries to plug the node given to an output specified.
 	 * Returns False if the Logic component doesn't have an input named "in_name"
-	 * True if successfull
+	 * True if successful
 	 * */
 	public boolean plugOutput(SNode n, String out_name){
-		if (input.get(out_name) != null){
-			input.put(out_name, n);
+		if (output.get(out_name) != null){
+			output.put(out_name, n);
 			return true;
 		}
 		else return false;
