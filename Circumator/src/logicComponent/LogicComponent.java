@@ -18,5 +18,13 @@ public abstract class LogicComponent {
         ans += "/n";
 		return ans;
 	}
+	
+	public Map<String, WNode> getInput(){
+		return input;
+	}
+	
+	public Map<String, WNode> getOutput(){
+		return output;
+	}
 }
 				
