@@ -34,7 +34,7 @@ public abstract class LogicComponent {
 	 * True if successful
 	 * */
 	public boolean plugInput(ENode n, String in_name){
-		if (input.get(in_name) != null){
+		if (input.containsKey(in_name)){
 			input.put(in_name, n);
 			return true;
 		}
@@ -47,7 +47,7 @@ public abstract class LogicComponent {
 	 * True if successful
 	 * */
 	public boolean plugOutput(SNode n, String out_name){
-		if (output.get(out_name) != null){
+		if (output.containsKey(out_name)){
 			output.put(out_name, n);
 			return true;
 		}
