@@ -8,6 +8,10 @@ public class Wire {
 	private WNode start;
 	private WNode end;
 	private ArrayList<Point2D> wireCords;
+	
+	public Wire(){
+		
+	}
 
 	public Wire(String wireID, WNode Start, WNode End,
 			ArrayList<Point2D> WireCords) {

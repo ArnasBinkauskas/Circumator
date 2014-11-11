@@ -11,7 +11,7 @@ public class SNode extends WNode {
 	Wire on_wire; 
 	// holds a pointer to the logic component and the output name this Node is plugged into
 	LogicComponent pluged_to;
-	String output_name;
+	public String output_name;
 	
 	public SNode(Wire on_w, String ID){
 		on_wire = on_w;

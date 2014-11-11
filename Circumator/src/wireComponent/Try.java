@@ -1,11 +1,12 @@
 package wireComponent;
 
 import java.awt.geom.Point2D;
+import logicComponent.oneBit.primitive.*;
 
 public class Try {
 	public static void main(String[] args) {
-		Point2D.Double c = new Point2D.Double(3, 5);
-		WNode fnode = new WNode("candy", 8, c);
-		System.out.println(fnode.getCords().getX());
+		ENode in = new ENode(null, "this is Input to buffer"); 
+		SNode out = new SNode(null, "this is output to buffer");
+		Buffer n = new Buffer(in, out);
 	}
 }

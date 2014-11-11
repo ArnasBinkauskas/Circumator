@@ -1,13 +1,28 @@
 package logicComponent;
-import java.util.Map;
+import java.util.HashMap;
 import wireComponent.*;
 
 //All Components will have a Node input with a meaningful name
 //Input and output names MUST be different
-public abstract class LogicComponent {
-	Map<String, ENode> input; 
-	Map<String, SNode> output;
+public class LogicComponent {
+	public HashMap<String, ENode> input; 
+	public HashMap<String, SNode> output;
 
+
+	
+	public LogicComponent(){
+		input = new HashMap<String, ENode>();
+		output = new HashMap<String, SNode>();
+	}
+	
+	/**
+	 * Many components will have a fixed number of inputs/outputs
+	 * */
+	public LogicComponent(int in_capacity, int out_capacity){
+		input = new HashMap<String, ENode>(in_capacity);
+		output = new HashMap<String, SNode>(out_capacity);
+	}
+	
 	/**@TODO 
 	 * Implement to show signals on inputs and outputs
 	 */
@@ -17,14 +32,6 @@ public abstract class LogicComponent {
         ans += "Outputs: ";
         ans += "/n";
 		return ans;
-	}
-	
-	public Map<String, ENode> getInput(){
-		return input;
-	}
-	
-	public Map<String, SNode> getOutput(){
-		return output;
 	}
 	
 	
