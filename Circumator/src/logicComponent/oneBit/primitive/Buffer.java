@@ -3,12 +3,12 @@ import java.util.Map;
 
 import logicComponent.LogicComponent;
 import wireComponent.*;
-
+import main.*;
 /**Class to represent a 1-bit Buffer in a circuit
  * Input of this component is going to be called "x"
  * Output of this component is going to be called "u"
  * */
-public class Buffer extends LogicComponent{
+public class Buffer extends LogicComponent implements Pushable{
 	/*From LogicComponent
 	 * Map<String, ENode> input; 
 	 * Map<String, SNode> output;
@@ -31,6 +31,15 @@ public class Buffer extends LogicComponent{
 		output.put("u", null);
 		in_node.plugTo(this, "x");
 		out_node.plugTo(this, "u");
+	}
+	
+	public void pushSignal(){
+		Signal in = input.get("x").getSignal();
+		Signal out = output.get("u").getSignal();
+		if ((in != null) && (out != null)){
+			out.setGateDelay(in.getGateDelay() + 1);
+			out.setValue(in.getValue());
+		}
 	}
 	
 }
