@@ -1,5 +1,4 @@
 package main;
-
 /**
  * Class to represent a 1bit signal in circuits
  * */

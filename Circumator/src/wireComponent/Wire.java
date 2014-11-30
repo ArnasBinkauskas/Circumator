@@ -17,8 +17,8 @@ public class Wire {
 			ArrayList<Point2D> WireCords) {
 		start = Start;
 		end = End;
-		wireCords.add(start.getCords());
+		wireCords.add(start.getCordinates());
 		wireCords.addAll(WireCords);
-		wireCords.add(end.getCords());
+		wireCords.add(end.getCordinates());
 	}
 }
