@@ -4,11 +4,11 @@ import java.util.Map;
 import logicComponent.LogicComponent;
 import wireComponent.*;
 import main.*;
-/**Class to represent a 1-bit Buffer in a circuit
+/**Class to represent a 1-bit Inverter in a circuit
  * Input of this component is going to be called "x"
  * Output of this component is going to be called "u"
  * */
-public class Buffer extends LogicComponent implements Pushable{
+public class Inverter extends LogicComponent implements Pushable{
 	/*From LogicComponent
 	 * Map<String, ENode> input; 
 	 * Map<String, SNode> output;
@@ -17,7 +17,7 @@ public class Buffer extends LogicComponent implements Pushable{
 	/**
 	 * No value constructor- initialise input/output names
 	 * */
-	public Buffer(){
+	public Inverter(){
 		//ENode dummy_in = new ENode(new Wire(),"dummy");
 		//SNode dummy_out = new SNode(new Wire(),"dummy");
 		super(1,1);
@@ -25,7 +25,7 @@ public class Buffer extends LogicComponent implements Pushable{
 		output.put("u", null);
 	}
 	
-	public Buffer(ENode in_node, SNode out_node){
+	public Inverter(ENode in_node, SNode out_node){
 		super(1,1);
 		input.put("x", null);
 		output.put("u", null);
@@ -42,7 +42,7 @@ public class Buffer extends LogicComponent implements Pushable{
 		Signal out = output.get("u").getSignal();
 		if ((in != null) && (out != null)){
 			out.setGateDelay(in.getGateDelay() + gateDelay);
-			out.setValue(in.getValue());
+			out.setValue(!in.getValue());
 		}
 	}
 	
