@@ -7,6 +7,12 @@ import wireComponent.*;
 public class LogicComponent {
 	public HashMap<String, ENode> input; 
 	public HashMap<String, SNode> output;
+	//coordinates
+	public int xCord;
+	public int yCord;
+	//gate delay 1 by default
+	public int gateDelay = 1;
+	public String label;
 
 
 	
@@ -34,7 +40,18 @@ public class LogicComponent {
 		return ans;
 	}
 	
+	public void setCordinates(int x, int y){
+		xCord = x;
+		yCord= y;
+	}
 	
+	public void setLabel(String l){
+		label = l;
+	}
+	
+	public void setGateDelay(int value){
+		gateDelay = value;
+	}
 	/**
 	 * Tries to plug the node given to an input specified.
 	 * Returns False if the Logic component doesn't have an input named "in_name"

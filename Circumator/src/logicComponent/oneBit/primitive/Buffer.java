@@ -1,4 +1,6 @@
 package logicComponent.oneBit.primitive;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Map;
 
 import logicComponent.LogicComponent;
@@ -13,7 +15,6 @@ public class Buffer extends LogicComponent implements Pushable{
 	 * Map<String, ENode> input; 
 	 * Map<String, SNode> output;
 	 * */
-	int gateDelay = 1;
 	/**
 	 * No value constructor- initialise input/output names
 	 * */
@@ -23,19 +24,22 @@ public class Buffer extends LogicComponent implements Pushable{
 		super(1,1);
 		input.put("x", null);
 		output.put("u", null);
+		xCord = 0;
+		yCord = 0;
+		label = "Buffer";
 	}
 	
-	public Buffer(ENode in_node, SNode out_node){
+	public Buffer(ENode in_node, SNode out_node, int xDraw, int yDraw){
 		super(1,1);
 		input.put("x", null);
 		output.put("u", null);
 		in_node.plugTo(this, "x");
 		out_node.plugTo(this, "u");
+		xCord = xDraw;
+		yCord = yDraw;
 	}
 	
-	public void setGateDelay(int value){
-		gateDelay = value;
-	}
+
 	
 	public void pushSignal(){
 		Signal in = input.get("x").getSignal();
@@ -45,5 +49,11 @@ public class Buffer extends LogicComponent implements Pushable{
 			out.setValue(in.getValue());
 		}
 	}
+	
+	 public void paint(Graphics g) {
+		    g.setColor(Color.black);
+		    g.drawRect(xCord + 8 ,yCord + 30,50,25);
+		    g.drawString(label, xCord + 16, yCord + 45);
+	 }
 	
 }
