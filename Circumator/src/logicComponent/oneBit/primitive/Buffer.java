@@ -15,6 +15,14 @@ public class Buffer extends LogicComponent implements Pushable{
 	 * Map<String, ENode> input; 
 	 * Map<String, SNode> output;
 	 * */
+	int width = 50;
+	int height = 25;
+	
+	int inCordX = xCord - 5;
+	int inCordY = yCord + 5;
+	
+	int outCordX = xCord - 5;
+	int outCordY = yCord + 5;
 	/**
 	 * No value constructor- initialise input/output names
 	 * */
@@ -50,10 +58,20 @@ public class Buffer extends LogicComponent implements Pushable{
 		}
 	}
 	
+	@Override
+	public void updateInOut(){
+		inCordX = xCord - 7;
+		inCordY = yCord + 5;
+	}
+	
+	
 	 public void paint(Graphics g) {
 		    g.setColor(Color.black);
-		    g.drawRect(xCord + 8 ,yCord + 30,50,25);
-		    g.drawString(label, xCord + 16, yCord + 45);
+		    g.drawRect(xCord,yCord,50,25);
+		    g.drawString("x , y", xCord, yCord);
+		    g.drawString("in", inCordX, inCordY);
+		    g.drawString(label, xCord + 8, yCord + 18);
+		    g.drawLine(xCord, inCordY, inCordX, inCordY);
 	 }
 	
 }

@@ -43,7 +43,10 @@ public class LogicComponent {
 	public void setCordinates(int x, int y){
 		xCord = x;
 		yCord= y;
+		updateInOut();
 	}
+	
+	public void updateInOut(){}
 	
 	public void setLabel(String l){
 		label = l;
