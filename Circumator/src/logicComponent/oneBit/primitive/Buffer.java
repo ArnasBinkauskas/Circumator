@@ -18,11 +18,11 @@ public class Buffer extends LogicComponent implements Pushable{
 	int width = 50;
 	int height = 25;
 	
-	int inCordX = xCord - 5;
-	int inCordY = yCord + 5;
+	int inCordX = xCord - width/10;
+	int inCordY = yCord + height/2;
 	
-	int outCordX = xCord - 5;
-	int outCordY = yCord + 5;
+	int outCordX = xCord + width + width/10;
+	int outCordY = yCord + height/2;
 	/**
 	 * No value constructor- initialise input/output names
 	 * */
@@ -60,18 +60,19 @@ public class Buffer extends LogicComponent implements Pushable{
 	
 	@Override
 	public void updateInOut(){
-		inCordX = xCord - 7;
-		inCordY = yCord + 5;
+		inCordX = xCord - width/10;
+		inCordY = yCord + height/2;
+		outCordX = xCord + width + width/10;
+		outCordY = yCord + height/2;
 	}
 	
 	
 	 public void paint(Graphics g) {
 		    g.setColor(Color.black);
-		    g.drawRect(xCord,yCord,50,25);
-		    g.drawString("x , y", xCord, yCord);
-		    g.drawString("in", inCordX, inCordY);
+		    g.drawRect(xCord,yCord, width,height);
 		    g.drawString(label, xCord + 8, yCord + 18);
 		    g.drawLine(xCord, inCordY, inCordX, inCordY);
+		    g.drawLine(outCordX - width/10, outCordY, outCordX, outCordY);
 	 }
 	
 }
