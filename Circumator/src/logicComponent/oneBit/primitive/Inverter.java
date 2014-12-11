@@ -1,4 +1,6 @@
 package logicComponent.oneBit.primitive;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Map;
 
 import logicComponent.LogicComponent;
@@ -13,6 +15,15 @@ public class Inverter extends LogicComponent implements Pushable{
 	 * Map<String, ENode> input; 
 	 * Map<String, SNode> output;
 	 * */
+	int width = 50;
+	int height = 25;
+	
+	int inCordX = xCord - width/10;
+	int inCordY = yCord + height/2;
+	
+	int outCordX = xCord + width + width/10;
+	int outCordY = yCord + height/2;
+	
 	int gateDelay = 1;
 	/**
 	 * No value constructor- initialise input/output names
@@ -23,18 +34,29 @@ public class Inverter extends LogicComponent implements Pushable{
 		super(1,1);
 		input.put("x", null);
 		output.put("u", null);
+		label = "Inv";
+		updateInOut();
 	}
 	
-	public Inverter(ENode in_node, SNode out_node){
+	public Inverter(ENode in_node, SNode out_node, int x, int y){
 		super(1,1);
 		input.put("x", null);
 		output.put("u", null);
 		in_node.plugTo(this, "x");
 		out_node.plugTo(this, "u");
+		setCordinates(x, y);
 	}
 	
 	public void setGateDelay(int value){
 		gateDelay = value;
+	}
+	
+	@Override
+	public void updateInOut(){
+		inCordX = xCord - width/10;
+		inCordY = yCord + height/2;
+		outCordX = xCord + width + width/10;
+		outCordY = yCord + height/2;
 	}
 	
 	public void pushSignal(){
@@ -45,5 +67,13 @@ public class Inverter extends LogicComponent implements Pushable{
 			out.setValue(!in.getValue());
 		}
 	}
+	
+	 public void paint(Graphics g) {
+		    g.setColor(Color.black);
+		    g.drawRect(xCord,yCord, width,height);
+		    g.drawString(label, xCord + 8, yCord + 18);
+		    g.drawLine(xCord, inCordY, inCordX, inCordY);
+		    g.drawLine(outCordX - width/10, outCordY, outCordX, outCordY);
+	 }
 	
 }

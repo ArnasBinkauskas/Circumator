@@ -25,7 +25,7 @@ public class CircuitDraw extends JFrame {
 	 public void paint(Graphics g) {
 		    //Here is how we used to draw a square with width
 		    //of 200, height of 200, and starting at x=50, y=50.
-		   Buffer b = new Buffer();
+		   Inverter b = new Inverter();
 		   b.setCordinates(80, 80);
 		   b.paint(g);
 	}
