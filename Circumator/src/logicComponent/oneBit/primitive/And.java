@@ -16,6 +16,15 @@ public class And extends LogicComponent implements Pushable{
 	 * Map<String, ENode> input; 
 	 * Map<String, SNode> output;
 	 * */
+	int width = 50;
+	int height = 25;
+	
+	int inCordX = xCord - width/10;
+	int inCordY = yCord + height/2;
+	
+	int outCordX = xCord + width + width/10;
+	int outCordY = yCord + height/2;
+	
 	int gateDelay = 1;
 	/**
 	 * No value constructor- initialise input/output names
@@ -28,6 +37,9 @@ public class And extends LogicComponent implements Pushable{
 		input.put("x", null);
 		input.put("y", null);
 		output.put("u", null);
+		xCord = 0;
+		yCord = 0;
+		label = "And";
 	}
 	
 	public And(ENode in_nodeX, ENode in_nodeY, SNode out_node){
