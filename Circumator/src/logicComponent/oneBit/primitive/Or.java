@@ -1,4 +1,6 @@
 package logicComponent.oneBit.primitive;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Map;
 
 import logicComponent.LogicComponent;
@@ -16,21 +18,32 @@ public class Or extends LogicComponent implements Pushable{
 	 * Map<String, ENode> input; 
 	 * Map<String, SNode> output;
 	 * */
+	int width = 50;
+	int height = 25;
+	
+	int inXCordX = xCord - width/10;
+	int inXCordY = yCord + height/4;
+	
+	int inYCordX = xCord - width/10;
+	int inYCordY = yCord + (height/4) * 3;
+	
+	int outUCordX = xCord + width + width/10;
+	int outUCordY = yCord + height/2;
+	
 	int gateDelay = 1;
 	/**
 	 * No value constructor- initialise input/output names
 	 * */
 	public Or(){
-		//ENode dummy_inX = new ENode(new Wire(),"dummy");
-		//ENode dummy_inY = new ENode(new Wire(),"dummy");
-		//SNode dummy_out = new SNode(new Wire(),"dummy");
 		super(2,1);
 		input.put("x", null);
 		input.put("y", null);
 		output.put("u", null);
+		label = "Or";
+		setCordinates(0,0);
 	}
 	
-	public Or(ENode in_nodeX, ENode in_nodeY, SNode out_node){
+	public Or(ENode in_nodeX, ENode in_nodeY, SNode out_node, int x, int y){
 		super(2,1);
 		input.put("x", null);
 		input.put("y", null);
@@ -38,10 +51,24 @@ public class Or extends LogicComponent implements Pushable{
 		in_nodeX.plugTo(this, "x");
 		in_nodeY.plugTo(this, "y");
 		out_node.plugTo(this, "u");
+		label = "Or";
+		setCordinates(x,y);
 	}
 	
 	public void setGateDelay(int value){
 		gateDelay = value;
+	}
+	
+	@Override
+	public void updateInOut(){
+		inXCordX = xCord - width/10;
+		inXCordY = yCord + height/4;
+		
+		inYCordX = xCord - width/10;
+		inYCordY = yCord + (height/4) * 3;
+		
+		outUCordX = xCord + width + width/10;
+		outUCordY = yCord + height/2;
 	}
 	
 	public void pushSignal(){
@@ -53,5 +80,14 @@ public class Or extends LogicComponent implements Pushable{
 			out.setValue((inX.getValue() || inY.getValue()));
 		}
 	}
+	
+	 public void paint(Graphics g) {
+		    g.setColor(Color.black);
+		    g.drawRect(xCord,yCord, width,height);
+		    g.drawString(label, xCord + 8, yCord + 18);
+		    g.drawLine(xCord, inXCordY, inXCordX, inXCordY);
+		    g.drawLine(xCord, inYCordY, inYCordX, inYCordY);
+		    g.drawLine(outUCordX - width/10, outUCordY, outUCordX, outUCordY);
+	 }
 	
 }
