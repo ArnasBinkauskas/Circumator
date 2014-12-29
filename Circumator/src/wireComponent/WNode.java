@@ -1,5 +1,4 @@
 package wireComponent;
-import java.awt.geom.Point2D;
 
 import logicComponent.LogicComponent;
 import main.Signal;
