@@ -1,9 +1,12 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 import logicComponent.oneBit.primitive.*;
+import wireComponent.*;
+import wireComponent.Point;
 
 public class CircuitDraw extends JFrame {
 	
@@ -23,10 +26,17 @@ public class CircuitDraw extends JFrame {
 	}
 	 
 	 public void paint(Graphics g) {
-		    //Here is how we used to draw a square with width
-		    //of 200, height of 200, and starting at x=50, y=50.
-		   Or b = new Or();
-		   b.setCordinates(80, 200);
+		   ArrayList<Point> f = new ArrayList<Point>();
+		   f.add(new Point(50, 60));
+		   f.add(new Point(50, 40));
+		   f.add(new Point(70, 40));
+		   Wire b = new Wire();
+		   WNode Start = new SNode(b, "s");
+		   Start.setCordinates(new Point(40,60));
+		   WNode End = new ENode(b, "e");
+		   End.setCordinates(new Point(72, 45));
+		   b.wireUp("w", Start, End,
+					f);
 		   b.paint(g);
 	}
 }

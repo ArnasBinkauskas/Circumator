@@ -16,12 +16,12 @@ public class Wire {
 		
 	}
 
-	public Wire(String wireID, WNode Start, WNode End,
+	public void wireUp(String wireID, WNode Start, WNode End,
 			ArrayList<Point> WireCords) {
 		start = Start;
 		end = End;
 		//wireCords.add(start.getCordinates());
-		wireCoords.addAll(WireCords);
+		wireCoords = WireCords;
 		//wireCords.add(end.getCordinates());
 	} 
 	
