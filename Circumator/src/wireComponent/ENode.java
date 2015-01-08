@@ -11,6 +11,7 @@ public class ENode extends WNode {
 	
 	public ENode(Wire on_w, String ID){
 		on_wire = on_w;
+		on_wire.setEnd(this);
 		nodeID = ID;
 		signal_value = new Signal();
 	}

@@ -30,13 +30,12 @@ public class CircuitDraw extends JFrame {
 		   f.add(new Point(50, 60));
 		   f.add(new Point(50, 40));
 		   f.add(new Point(70, 40));
-		   Wire b = new Wire();
+		   Wire b = new Wire("b");
 		   WNode Start = new SNode(b, "s");
 		   Start.setCordinates(new Point(40,60));
 		   WNode End = new ENode(b, "e");
 		   End.setCordinates(new Point(72, 45));
-		   b.wireUp("w", Start, End,
-					f);
+		   b.setCoordinates(f);
 		   b.paint(g);
 	}
 }

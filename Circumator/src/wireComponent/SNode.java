@@ -11,6 +11,7 @@ public class SNode extends WNode {
 	
 	public SNode(Wire on_w, String ID){
 		on_wire = on_w;
+		on_wire.setStart(this);
 		nodeID = ID;
 		signal_value = new Signal();
 	}

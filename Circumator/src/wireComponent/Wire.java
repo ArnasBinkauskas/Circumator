@@ -12,14 +12,19 @@ public class Wire {
 	WNode end;
 	ArrayList<Point> wireCoords;
 	
-	public Wire(){
-		
+	public Wire(String WireID){
+		wireID = WireID;
+	}
+	
+	public void  setStart(WNode Start){
+		start = Start;
+	}
+	
+	public void setEnd(WNode End){
+		end = End;
 	}
 
-	public void wireUp(String wireID, WNode Start, WNode End,
-			ArrayList<Point> WireCords) {
-		start = Start;
-		end = End;
+	public void setCoordinates(ArrayList<Point> WireCords) {
 		//wireCords.add(start.getCordinates());
 		wireCoords = WireCords;
 		//wireCords.add(end.getCordinates());
