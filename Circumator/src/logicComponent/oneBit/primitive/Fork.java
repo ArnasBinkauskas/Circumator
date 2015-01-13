@@ -2,22 +2,19 @@ package logicComponent.oneBit.primitive;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import logicComponent.LogicComponent;
 import wireComponent.*;
 import main.*;
-/**Class to represent a 1-bit Or gate in a circuit
- * Inputs of this component is going to be called "x" and "y"
- * Output of this component is going to be called "u"
+/**
+ * Class to represent a forked wire
+ * 1 input, min 2 outputs, no gate delay
+ * x is input, outputs are "1" to "n" where n is an integer greater than 1
  * */
 
-
-	
-public class Or extends LogicComponent implements Pushable{
-	/*From LogicComponent
-	 * Map<String, ENode> input; 
-	 * Map<String, SNode> output;
-	 * */
+public class Fork extends LogicComponent implements Pushable{
 	int width = 50;
 	int height = 25;
 	
@@ -30,32 +27,34 @@ public class Or extends LogicComponent implements Pushable{
 	int outUCordX = xCord + width + width/10;
 	int outUCordY = yCord + height/2;
 	
+	
 	/**
 	 * No value constructor- initialise input/output names
 	 * */
-	public Or(){
-		super(2,1);
+	public Fork(){
+		super(1,2);
 		input.put("x", null);
-		input.put("y", null);
-		output.put("u", null);
-		label = "Or";
+		output.put("1", null);
+		output.put("2", null);
+		label = "Fork";
 		setCordinates(0,0);
+		gateDelay = 0;
 	}
-	
-	public Or(ENode in_nodeX, ENode in_nodeY, SNode out_node, int x, int y){
-		super(2,1);
+	/**
+	 * Constructor to plug in the in/out nodes to component and 
+	 * set screen coordinates to (x,y)
+	 * */
+	public Fork(ENode in_nodeX, ArrayList<SNode> out_node, int x, int y){
+		super(1,2);
 		input.put("x", null);
-		input.put("y", null);
-		output.put("u", null);
 		in_nodeX.plugTo(this, "x");
-		in_nodeY.plugTo(this, "y");
-		out_node.plugTo(this, "u");
-		label = "Or";
+		for(Integer i = 0; i < out_node.size(); i++){
+			output.put(i.toString(), null);
+			out_node.get(i).plugTo(this, i.toString());
+		}
+		label = "Fork";
 		setCordinates(x,y);
-	}
-	
-	public void setGateDelay(int value){
-		gateDelay = value;
+		gateDelay = 0;
 	}
 	
 	@Override
@@ -72,13 +71,14 @@ public class Or extends LogicComponent implements Pushable{
 	
 	public void pushSignal(){
 		Signal inX = input.get("x").getSignal();
-		Signal inY = input.get("y").getSignal();
-		Signal out = output.get("u").getSignal();
-		if ((inX != null) && (inY != null) && (out != null)){
-			out.setGateDelay(Math.max(inX.getGateDelay(), inY.getGateDelay()) + gateDelay);
-			out.setValue((inX.getValue() || inY.getValue()));
+		Iterator outNode = output.values().iterator();
+		while (outNode.hasNext()){
+			SNode nextBranch = (SNode)outNode.next();
+			nextBranch.getSignal().setGateDelay(inX.getGateDelay());
+			nextBranch.getSignal().setValue(inX.getValue());;
+			}
 		}
-	}
+	
 	
 	 public void paint(Graphics g) {
 		    g.setColor(Color.black);
@@ -88,5 +88,6 @@ public class Or extends LogicComponent implements Pushable{
 		    g.drawLine(xCord, inYCordY, inYCordX, inYCordY);
 		    g.drawLine(outUCordX - width/10, outUCordY, outUCordX, outUCordY);
 	 }
+	
 	
 }

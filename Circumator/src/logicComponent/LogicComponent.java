@@ -11,7 +11,7 @@ public class LogicComponent {
 	public int xCord;
 	public int yCord;
 	//gate delay 1 by default
-	public int gateDelay = 1;
+	public int gateDelay;
 	public String label;
 
 
