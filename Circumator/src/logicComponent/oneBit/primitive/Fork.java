@@ -19,13 +19,7 @@ public class Fork extends LogicComponent implements Pushable{
 	int height = 25;
 	
 	int inXCordX = xCord - width/10;
-	int inXCordY = yCord + height/4;
-	
-	int inYCordX = xCord - width/10;
-	int inYCordY = yCord + (height/4) * 3;
-	
-	int outUCordX = xCord + width + width/10;
-	int outUCordY = yCord + height/2;
+	int inXCordY = yCord + height/2;
 	
 	
 	/**
@@ -61,12 +55,7 @@ public class Fork extends LogicComponent implements Pushable{
 	public void updateInOut(){
 		inXCordX = xCord - width/10;
 		inXCordY = yCord + height/4;
-		
-		inYCordX = xCord - width/10;
-		inYCordY = yCord + (height/4) * 3;
-		
-		outUCordX = xCord + width + width/10;
-		outUCordY = yCord + height/2;
+	
 	}
 	
 	public void pushSignal(){
@@ -85,8 +74,6 @@ public class Fork extends LogicComponent implements Pushable{
 		    g.drawRect(xCord,yCord, width,height);
 		    g.drawString(label, xCord + 8, yCord + 18);
 		    g.drawLine(xCord, inXCordY, inXCordX, inXCordY);
-		    g.drawLine(xCord, inYCordY, inYCordX, inYCordY);
-		    g.drawLine(outUCordX - width/10, outUCordY, outUCordX, outUCordY);
 	 }
 	
 	
