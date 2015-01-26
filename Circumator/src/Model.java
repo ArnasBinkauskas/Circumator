@@ -89,6 +89,11 @@ public class Model {
 			c =  readAnd1(buffer);
 		else if (buffer[0].equals("or1"))
 			c = readOr1(buffer);
+		else if (buffer[0].equals("buf1"))
+			c = readBuf1(buffer);
+		else if (buffer[0].equals("inv1"))
+			c = readInv1(buffer);
+		
 	}
 	
 	public And readAnd1(String[] netLine){
@@ -113,6 +118,26 @@ public class Model {
 						node.get(input[1]),
 						node.get(netLine[3]), 
 						coordsPoint);
+	}
+	
+	public Buffer readBuf1(String[] netLine){
+		String[] coord = netLine[4].split(",");
+		Point coordsPoint = new Point( Integer.parseInt(coord[0]), 
+		          					   Integer.parseInt(coord[1]));
+		return  new Buffer(netLine[1], 
+						node.get(netLine[2]), 
+						node.get(netLine[3]), 
+						coordsPoint);	
+	}
+	
+	public Inverter readInv1(String[] netLine){
+		String[] coord = netLine[4].split(",");
+		Point coordsPoint = new Point( Integer.parseInt(coord[0]), 
+		          					   Integer.parseInt(coord[1]));
+		return  new Inverter(netLine[1], 
+						node.get(netLine[2]), 
+						node.get(netLine[3]), 
+						coordsPoint);	
 	}
 		
 }

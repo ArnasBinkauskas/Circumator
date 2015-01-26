@@ -18,11 +18,11 @@ public class Buffer extends LogicComponent implements Pushable{
 	int width = 50;
 	int height = 25;
 	
-	int inCordX = xCord - width/10;
-	int inCordY = yCord + height/2;
+	int inCordX ;
+	int inCordY ;
 	
-	int outCordX = xCord + width + width/10;
-	int outCordY = yCord + height/2;
+	int outCordX;
+	int outCordY ;
 	/**
 	 * No value constructor- initialise input/output names
 	 * */
@@ -32,18 +32,17 @@ public class Buffer extends LogicComponent implements Pushable{
 		super(1,1);
 		input.put("x", null);
 		output.put("u", null);
-		xCord = 0;
-		yCord = 0;
+		setCordinates(new Point(0,0));
 		label = "Buffer";
 	}
 	
-	public Buffer(WNode in_node, WNode out_node, int xDraw, int yDraw){
+	public Buffer(String gateID, WNode in_node, WNode out_node, Point centreCoords){
 		super(1,1);
 		input.put("x", null);
 		output.put("u", null);
 		plugInput(in_node, "x");
 		plugOutput(out_node, "u");
-		setCordinates(xDraw, yDraw);
+		setCordinates(centreCoords);
 	}
 	
 
@@ -59,18 +58,18 @@ public class Buffer extends LogicComponent implements Pushable{
 	
 	@Override
 	public void updateInOut(){
-		inCordX = xCord - width/10;
-		inCordY = yCord + height/2;
-		outCordX = xCord + width + width/10;
-		outCordY = yCord + height/2;
+		inCordX = center.getX() - width/10;
+		inCordY = center.getY() + height/2;
+		outCordX = center.getX() + width + width/10;
+		outCordY = center.getY() + height/2;
 	}
 	
 	
 	 public void paint(Graphics g) {
 		    g.setColor(Color.black);
-		    g.drawRect(xCord,yCord, width,height);
-		    g.drawString(label, xCord + 8, yCord + 18);
-		    g.drawLine(xCord, inCordY, inCordX, inCordY);
+		    g.drawRect(center.getX(),center.getY(), width,height);
+		    g.drawString(label, center.getX() + 8, center.getY() + 18);
+		    g.drawLine(center.getX(), inCordY, inCordX, inCordY);
 		    g.drawLine(outCordX - width/10, outCordY, outCordX, outCordY);
 	 }
 	
