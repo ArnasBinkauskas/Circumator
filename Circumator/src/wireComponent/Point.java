@@ -17,6 +17,10 @@ public class Point {
 		y = yCord;
 	}
 	
+	public String toString(){
+		return "(" + x + "," + y + ")";
+	}
+	
 	public void setX(int xCord){
 		x = xCord;
 	}

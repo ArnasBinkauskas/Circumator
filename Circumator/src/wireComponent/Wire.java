@@ -16,7 +16,17 @@ public class Wire {
 		wireID = WireID;
 	}
 	
-	public void  setStart(WNode Start){
+	public Wire(String WireID, WNode Start, WNode End){
+		wireID = WireID;
+		start = Start;
+		end = End;
+	}
+	
+	public String toString(){
+		return wireID + " (" + start.toString() + "," + end.toString() + ")";
+	}
+	
+	public void setStart(WNode Start){
 		start = Start;
 	}
 	
@@ -25,9 +35,7 @@ public class Wire {
 	}
 
 	public void setCoordinates(ArrayList<Point> WireCords) {
-		//wireCords.add(start.getCordinates());
 		wireCoords = WireCords;
-		//wireCords.add(end.getCordinates());
 	} 
 	
 	 public void paint(Graphics g) {

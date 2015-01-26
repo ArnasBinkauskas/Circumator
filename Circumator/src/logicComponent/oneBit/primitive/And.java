@@ -21,14 +21,14 @@ public class And extends LogicComponent implements Pushable{
 	int width = 50;
 	int height = 25;
 	
-	int inXCordX = xCord - width/10;
-	int inXCordY = yCord + height/4;
+	int inXCordX ;
+	int inXCordY ;
 	
-	int inYCordX = xCord - width/10;
-	int inYCordY = yCord + (height/4) * 3;
+	int inYCordX ;
+	int inYCordY ;
 	
-	int outUCordX = xCord + width + width/10;
-	int outUCordY = yCord + height/2;
+	int outUCordX ;
+	int outUCordY ;
 	
 	int gateDelay = 1;
 	/**
@@ -42,22 +42,20 @@ public class And extends LogicComponent implements Pushable{
 		input.put("x", null);
 		input.put("y", null);
 		output.put("u", null);
-		xCord = 0;
-		yCord = 0;
-		setCordinates(0,0);
+		setCordinates(new Point (0,0));
 		label = "And";
 	}
 	
-	public And(WNode in_nodeX, WNode in_nodeY, WNode out_node, int x, int y){
+	public And(String gateID, WNode in_nodeX, WNode in_nodeY, WNode out_node, Point centreCoords){
 		super(2,1);
-		input.put("x", null);
-		input.put("y", null);
-		output.put("u", null);
+		ID = gateID;
 		plugInput(in_nodeX, "x");
 		plugInput(in_nodeY, "y");
 		plugOutput(out_node, "u");
-		setCordinates(x,y);
+		setCordinates(centreCoords);
 	}
+	
+
 	
 	public void setGateDelay(int value){
 		gateDelay = value;
@@ -75,22 +73,22 @@ public class And extends LogicComponent implements Pushable{
 	
 	@Override
 	public void updateInOut(){
-		inXCordX = xCord - width/10;
-		inXCordY = yCord + height/4;
+		inXCordX = center.getX() - width/10;
+		inXCordY = center.getY() + height/4;
 		
-		inYCordX = xCord - width/10;
-		inYCordY = yCord + (height/4) * 3;
+		inYCordX = center.getX() - width/10;
+		inYCordY = center.getY() + (height/4) * 3;
 		
-		outUCordX = xCord + width + width/10;
-		outUCordY = yCord + height/2;
+		outUCordX = center.getX() + width + width/10;
+		outUCordY = center.getY() + height/2;
 	}
 	
 	 public void paint(Graphics g) {
 		    g.setColor(Color.black);
-		    g.drawRect(xCord,yCord, width,height);
-		    g.drawString(label, xCord + 8, yCord + 18);
-		    g.drawLine(xCord, inXCordY, inXCordX, inXCordY);
-		    g.drawLine(xCord, inYCordY, inYCordX, inYCordY);
+		    g.drawRect(center.getX(),center.getY(), width,height);
+		    g.drawString(label, center.getX() + 8, center.getY() + 18);
+		    g.drawLine(center.getX(), inXCordY, inXCordX, inXCordY);
+		    g.drawLine(center.getX(), inYCordY, inYCordX, inYCordY);
 		    g.drawLine(outUCordX - width/10, outUCordY, outUCordX, outUCordY);
 	 }
 	

@@ -5,11 +5,12 @@ import wireComponent.*;
 //All Components will have a Node input with a meaningful name
 //Input and output names MUST be different
 public class LogicComponent {
+	public String ID;
+	
 	public HashMap<String, WNode> input; 
 	public HashMap<String, WNode> output;
 	//coordinates
-	public int xCord;
-	public int yCord;
+	public Point center;
 	//gate delay 1 by default
 	public int gateDelay;
 	public String label;
@@ -40,9 +41,8 @@ public class LogicComponent {
 		return ans;
 	}
 	
-	public void setCordinates(int x, int y){
-		xCord = x;
-		yCord= y;
+	public void setCordinates(Point c){
+		center = c;
 		updateInOut();
 	}
 	
@@ -59,6 +59,7 @@ public class LogicComponent {
 	 *  Plugs a node into specific input slot
 	 * */
 	public void plugInput(WNode n, String in_name){
+		n.plugTo(this);
 		input.putIfAbsent(in_name, n);
 	}
 	
@@ -66,6 +67,7 @@ public class LogicComponent {
 	 * Plugs a node into specific output slot
 	 * */
 	public void plugOutput(WNode n, String out_name){
+		n.plugTo(this);
 		input.putIfAbsent(out_name, n);
 	}
 }

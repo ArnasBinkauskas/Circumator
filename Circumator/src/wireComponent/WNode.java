@@ -7,13 +7,26 @@ public class  WNode {
 	String nodeID;
 	Signal signal_value; // holds the signal on this node at current time
 	Point coordinates;
-
+	LogicComponent plugedTo; //pointer to the component the node is plugged to
 		
 	public WNode(String ID){
 			nodeID = ID;
 			signal_value = new Signal();
 	}
-		
+	
+	public void plugTo(LogicComponent c){
+		plugedTo = c;
+	}
+	
+	public void unplug(){
+		plugedTo = null;
+	}
+	
+	public String toString(){
+		return nodeID + " " + coordinates.toString();
+	}
+	
+	
 	//getters and setters
 	public String getNodeID() {
 		return nodeID;
