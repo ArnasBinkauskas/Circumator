@@ -38,13 +38,13 @@ public class Fork extends LogicComponent implements Pushable{
 	 * Constructor to plug in the in/out nodes to component and 
 	 * set screen coordinates to (x,y)
 	 * */
-	public Fork(ENode in_nodeX, ArrayList<SNode> out_node, int x, int y){
+	public Fork(WNode in_nodeX, ArrayList<WNode> out_node, int x, int y){
 		super(1,2);
 		input.put("x", null);
-		in_nodeX.plugTo(this, "x");
+		plugInput(in_nodeX, "x");
 		for(Integer i = 0; i < out_node.size(); i++){
 			output.put(i.toString(), null);
-			out_node.get(i).plugTo(this, i.toString());
+			plugOutput(out_node.get(i), i.toString());
 		}
 		label = "Fork";
 		setCordinates(x,y);
@@ -62,7 +62,7 @@ public class Fork extends LogicComponent implements Pushable{
 		Signal inX = input.get("x").getSignal();
 		Iterator outNode = output.values().iterator();
 		while (outNode.hasNext()){
-			SNode nextBranch = (SNode)outNode.next();
+			WNode nextBranch = (WNode)outNode.next();
 			nextBranch.getSignal().setGateDelay(inX.getGateDelay());
 			nextBranch.getSignal().setValue(inX.getValue());;
 			}

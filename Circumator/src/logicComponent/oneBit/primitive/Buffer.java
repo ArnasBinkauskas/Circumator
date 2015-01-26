@@ -37,12 +37,12 @@ public class Buffer extends LogicComponent implements Pushable{
 		label = "Buffer";
 	}
 	
-	public Buffer(ENode in_node, SNode out_node, int xDraw, int yDraw){
+	public Buffer(WNode in_node, WNode out_node, int xDraw, int yDraw){
 		super(1,1);
 		input.put("x", null);
 		output.put("u", null);
-		in_node.plugTo(this, "x");
-		out_node.plugTo(this, "u");
+		plugInput(in_node, "x");
+		plugOutput(out_node, "u");
 		setCordinates(xDraw, yDraw);
 	}
 	

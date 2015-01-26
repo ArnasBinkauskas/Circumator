@@ -48,14 +48,14 @@ public class And extends LogicComponent implements Pushable{
 		label = "And";
 	}
 	
-	public And(ENode in_nodeX, ENode in_nodeY, SNode out_node, int x, int y){
+	public And(WNode in_nodeX, WNode in_nodeY, WNode out_node, int x, int y){
 		super(2,1);
 		input.put("x", null);
 		input.put("y", null);
 		output.put("u", null);
-		in_nodeX.plugTo(this, "x");
-		in_nodeY.plugTo(this, "y");
-		out_node.plugTo(this, "u");
+		plugInput(in_nodeX, "x");
+		plugInput(in_nodeY, "y");
+		plugOutput(out_node, "u");
 		setCordinates(x,y);
 	}
 	

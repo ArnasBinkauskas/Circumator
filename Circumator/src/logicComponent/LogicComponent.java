@@ -5,8 +5,8 @@ import wireComponent.*;
 //All Components will have a Node input with a meaningful name
 //Input and output names MUST be different
 public class LogicComponent {
-	public HashMap<String, ENode> input; 
-	public HashMap<String, SNode> output;
+	public HashMap<String, WNode> input; 
+	public HashMap<String, WNode> output;
 	//coordinates
 	public int xCord;
 	public int yCord;
@@ -17,16 +17,16 @@ public class LogicComponent {
 
 	
 	public LogicComponent(){
-		input = new HashMap<String, ENode>();
-		output = new HashMap<String, SNode>();
+		input = new HashMap<String, WNode>();
+		output = new HashMap<String, WNode>();
 	}
 	
 	/**
 	 * Many components will have a fixed number of inputs/outputs
 	 * */
 	public LogicComponent(int in_capacity, int out_capacity){
-		input = new HashMap<String, ENode>(in_capacity);
-		output = new HashMap<String, SNode>(out_capacity);
+		input = new HashMap<String, WNode>(in_capacity);
+		output = new HashMap<String, WNode>(out_capacity);
 	}
 	
 	/**@TODO 
@@ -56,29 +56,17 @@ public class LogicComponent {
 		gateDelay = value;
 	}
 	/**
-	 * Tries to plug the node given to an input specified.
-	 * Returns False if the Logic component doesn't have an input named "in_name"
-	 * True if successful
+	 *  Plugs a node into specific input slot
 	 * */
-	public boolean plugInput(ENode n, String in_name){
-		if (input.containsKey(in_name)){
-			input.put(in_name, n);
-			return true;
-		}
-		else return false;
+	public void plugInput(WNode n, String in_name){
+		input.putIfAbsent(in_name, n);
 	}
 	
 	/**
-	 * Tries to plug the node given to an output specified.
-	 * Returns False if the Logic component doesn't have an input named "in_name"
-	 * True if successful
+	 * Plugs a node into specific output slot
 	 * */
-	public boolean plugOutput(SNode n, String out_name){
-		if (output.containsKey(out_name)){
-			output.put(out_name, n);
-			return true;
-		}
-		else return false;
+	public void plugOutput(WNode n, String out_name){
+		input.putIfAbsent(out_name, n);
 	}
 }
 				

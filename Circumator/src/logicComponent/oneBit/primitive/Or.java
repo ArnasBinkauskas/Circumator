@@ -42,14 +42,14 @@ public class Or extends LogicComponent implements Pushable{
 		setCordinates(0,0);
 	}
 	
-	public Or(ENode in_nodeX, ENode in_nodeY, SNode out_node, int x, int y){
+	public Or(WNode in_nodeX, WNode in_nodeY, WNode out_node, int x, int y){
 		super(2,1);
 		input.put("x", null);
 		input.put("y", null);
 		output.put("u", null);
-		in_nodeX.plugTo(this, "x");
-		in_nodeY.plugTo(this, "y");
-		out_node.plugTo(this, "u");
+		plugInput(in_nodeX, "x");
+		plugInput(in_nodeY, "y");
+		plugOutput(out_node, "u");
 		label = "Or";
 		setCordinates(x,y);
 	}

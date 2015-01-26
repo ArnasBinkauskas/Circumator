@@ -38,12 +38,12 @@ public class Inverter extends LogicComponent implements Pushable{
 		updateInOut();
 	}
 	
-	public Inverter(ENode in_node, SNode out_node, int x, int y){
+	public Inverter(WNode in_node, WNode out_node, int x, int y){
 		super(1,1);
 		input.put("x", null);
 		output.put("u", null);
-		in_node.plugTo(this, "x");
-		out_node.plugTo(this, "u");
+		plugInput(in_node, "x");
+		plugOutput(out_node, "u");
 		setCordinates(x, y);
 	}
 	
