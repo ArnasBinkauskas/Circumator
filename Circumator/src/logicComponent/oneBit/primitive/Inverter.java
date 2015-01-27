@@ -10,42 +10,19 @@ import main.*;
  * Input of this component is going to be called "x"
  * Output of this component is going to be called "u"
  * */
-public class Inverter extends LogicComponent implements Pushable{
-	/*From LogicComponent
-	 * Map<String, ENode> input; 
-	 * Map<String, SNode> output;
-	 * */
-	int width = 50;
-	int height = 25;
-	
-	int inCordX ;
-	int inCordY ;
-	
-	int outCordX;
-	int outCordY ;
+public class Inverter extends OneOne implements Pushable{
 	/**
 	 * No value constructor- initialise input/output names
 	 * */
 	public Inverter(){
-		//ENode dummy_in = new ENode(new Wire(),"dummy");
-		//SNode dummy_out = new SNode(new Wire(),"dummy");
-		super(1,1);
-		input.put("x", null);
-		output.put("u", null);
-		setCordinates(new Point(0,0));
-		label = "Buffer";
+		super();
+		label = "Invert";
 	}
 	
 	public Inverter(String gateID, WNode in_node, WNode out_node, Point centreCoords){
-		super(1,1);
-		input.put("x", null);
-		output.put("u", null);
-		plugInput(in_node, "x");
-		plugOutput(out_node, "u");
-		setCordinates(centreCoords);
+		super(gateID, in_node, out_node, centreCoords);
+		label = "Invert";
 	}
-	
-
 	
 	public void pushSignal(){
 		Signal in = input.get("x").getSignal();
@@ -55,22 +32,4 @@ public class Inverter extends LogicComponent implements Pushable{
 			out.setValue(!in.getValue());
 		}
 	}
-	
-	@Override
-	public void updateInOut(){
-		inCordX = center.getX() - width/10;
-		inCordY = center.getY() + height/2;
-		outCordX = center.getX() + width + width/10;
-		outCordY = center.getY() + height/2;
-	}
-	
-	
-	 public void paint(Graphics g) {
-		    g.setColor(Color.black);
-		    g.drawRect(center.getX(),center.getY(), width,height);
-		    g.drawString(label, center.getX() + 8, center.getY() + 18);
-		    g.drawLine(center.getX(), inCordY, inCordX, inCordY);
-		    g.drawLine(outCordX - width/10, outCordY, outCordX, outCordY);
-	 }
-	
 }
