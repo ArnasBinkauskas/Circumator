@@ -93,51 +93,73 @@ public class Model {
 			c = readBuf1(buffer);
 		else if (buffer[0].equals("inv1"))
 			c = readInv1(buffer);
+		else if (buffer[0].equals("fork12"))
+			c = readFork12(buffer);
+		else if (buffer[0].equals("fork13"))
+			c = readFork13(buffer);
+		else c = null;
 		
+		if (c.equals(null))
+			System.out.println("Unknown Component");
+		else
+			comp.putIfAbsent(buffer[0], c);
 	}
 	
 	public And readAnd1(String[] netLine){
 		String[] input = netLine[2].split(",");
-		String[] coord = netLine[4].split(",");
-		Point coordsPoint = new Point( Integer.parseInt(coord[0]), 
-		          					   Integer.parseInt(coord[1]));
 		return  new And(netLine[1], 
 						node.get(input[0]), 
 						node.get(input[1]),
 						node.get(netLine[3]), 
-						coordsPoint);
+						computePoint(netLine[4]));
 	}
 	
 	public Or readOr1(String[] netLine){
 		String[] input = netLine[2].split(",");
-		String[] coord = netLine[4].split(",");
-		Point coordsPoint = new Point( Integer.parseInt(coord[0]), 
-		          					   Integer.parseInt(coord[1]));
 		return  new Or(netLine[1], 
 						node.get(input[0]), 
 						node.get(input[1]),
 						node.get(netLine[3]), 
-						coordsPoint);
+						computePoint(netLine[4]));
 	}
 	
 	public Buffer readBuf1(String[] netLine){
-		String[] coord = netLine[4].split(",");
-		Point coordsPoint = new Point( Integer.parseInt(coord[0]), 
-		          					   Integer.parseInt(coord[1]));
 		return  new Buffer(netLine[1], 
 						node.get(netLine[2]), 
 						node.get(netLine[3]), 
-						coordsPoint);	
+						computePoint(netLine[4]));	
 	}
 	
 	public Inverter readInv1(String[] netLine){
-		String[] coord = netLine[4].split(",");
-		Point coordsPoint = new Point( Integer.parseInt(coord[0]), 
-		          					   Integer.parseInt(coord[1]));
 		return  new Inverter(netLine[1], 
 						node.get(netLine[2]), 
 						node.get(netLine[3]), 
-						coordsPoint);	
+						computePoint(netLine[4]));	
+	}
+	
+	public Fork readFork12(String[] netLine){
+		String[] output = netLine[3].split(",");
+		return new Fork(netLine[1], 
+						node.get(netLine[2]), 
+						node.get(output[0]),
+						node.get(output[1]),
+						computePoint(netLine[4]));
+	}
+	
+	public ForkThree readFork13(String[] netLine){
+		String[] output = netLine[3].split(",");
+		return new ForkThree(netLine[1], 
+						node.get(netLine[2]), 
+						node.get(output[0]),
+						node.get(output[1]),
+						node.get(output[2]),
+						computePoint(netLine[4]));
+	}
+	
+	public Point computePoint(String c){
+		String[] coord = c.split(",");
+		return new Point( Integer.parseInt(coord[0]), 
+				   Integer.parseInt(coord[1]));
 	}
 		
 }

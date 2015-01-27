@@ -31,16 +31,17 @@ public class OneMany extends LogicComponent {
 		setCordinates(new Point(0,0));
 	}
 	
-	public OneMany(WNode in_nodeX, WNode out_nodeU, WNode out_nodeD, Point c){
+	public OneMany(String cID, WNode in_nodeX, WNode out_nodeU, WNode out_nodeD, Point c){
 		super(1,2);
 		input.put("x", null);
 		plugInput(in_nodeX, "x");
 		plugOutput(out_nodeU, "u");
 		plugOutput(out_nodeD, "d");
+		ID = cID;
 		setCordinates(c);
 	}
 	
-	public OneMany(WNode in_nodeX, WNode out_nodeU, WNode out_nodeM, WNode out_nodeD, Point c){
+	public OneMany(String cID, WNode in_nodeX, WNode out_nodeU, WNode out_nodeM, WNode out_nodeD, Point c){
 		super(1,2);
 		input.put("x", null);
 		plugInput(in_nodeX, "x");

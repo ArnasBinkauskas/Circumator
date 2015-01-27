@@ -27,8 +27,8 @@ public class Fork extends OneMany implements Pushable{
 	 * Constructor to plug in the in/out nodes to component and 
 	 * set screen coordinates to (x,y)
 	 * */
-	public Fork(WNode in_nodeX, WNode out_nodeU, WNode out_nodeD, Point coords){
-		super(in_nodeX, out_nodeU, out_nodeD, coords);
+	public Fork(String ID, WNode in_nodeX, WNode out_nodeU, WNode out_nodeD, Point coords){
+		super(ID, in_nodeX, out_nodeU, out_nodeD, coords);
 		label = "Fork";
 		gateDelay = 0;
 	}
