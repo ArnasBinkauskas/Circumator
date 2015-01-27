@@ -73,5 +73,4 @@ public abstract class TwoOne extends LogicComponent{
 		    g.drawLine(outUCordX - width/10, outUCordY, outUCordX, outUCordY);
 	 }
 	
-	
 }
