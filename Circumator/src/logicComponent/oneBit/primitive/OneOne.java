@@ -49,7 +49,7 @@ public abstract class OneOne extends LogicComponent {
 		outCordY = center.getY() + height/2;
 	}
 	
-	
+	 @Override
 	 public void paint(Graphics g) {
 		    g.setColor(Color.black);
 		    g.drawRect(center.getX(),center.getY(), width,height);

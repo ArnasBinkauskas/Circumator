@@ -1,5 +1,8 @@
 package logicComponent;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.HashMap;
+
 import wireComponent.*;
 
 //All Components will have a Node input with a meaningful name
@@ -70,5 +73,9 @@ public class LogicComponent {
 		n.plugTo(this);
 		input.putIfAbsent(out_name, n);
 	}
+	
+	//TODO appropriate graph
+	 public void paint(Graphics g) {
+	 }
 }
 				

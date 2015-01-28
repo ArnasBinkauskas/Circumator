@@ -56,5 +56,9 @@ public class  WNode {
 	public void setCordinates(Point coords) {
 		this.coordinates = coords;
 	}
+	
+	public boolean isEqual(WNode n){
+		return n.nodeID.equals(this.nodeID);
+	}
 
 }

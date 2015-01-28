@@ -45,6 +45,7 @@ public class Fork extends OneMany implements Pushable{
 		}
 	
 	//TODO appropriate graph
+	 @Override
 	 public void paint(Graphics g) {
 		    g.setColor(Color.black);
 		    g.drawRect(center.getX(),center.getY(), width,height);

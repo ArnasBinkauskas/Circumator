@@ -64,6 +64,7 @@ public abstract class TwoOne extends LogicComponent{
 		outUCordY = center.getY() + height/2;
 	}
 	
+	 @Override
 	 public void paint(Graphics g) {
 		    g.setColor(Color.black);
 		    g.drawRect(center.getX(),center.getY(), width,height);
