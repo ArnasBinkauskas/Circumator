@@ -1,12 +1,13 @@
 package wireComponent;
 
+import main.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Wire {
+public class Wire implements Pushable {
 	String wireID;
 	WNode start;
 	WNode end;
@@ -20,6 +21,12 @@ public class Wire {
 		wireID = WireID;
 		start = Start;
 		end = End;
+		start.plugWire(this);
+		end.plugWire(this);
+	}
+	
+	public void pushSignal(){
+		end.setSignal(start.getSignal());
 	}
 	
 	public String toString(){

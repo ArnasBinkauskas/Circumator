@@ -8,6 +8,7 @@ public class  WNode {
 	Signal signal_value; // holds the signal on this node at current time
 	Point coordinates;
 	LogicComponent plugedTo; //pointer to the component the node is plugged to
+	Wire on_wire;
 		
 	public WNode(String ID){
 			nodeID = ID;
@@ -16,6 +17,10 @@ public class  WNode {
 	
 	public void plugTo(LogicComponent c){
 		plugedTo = c;
+	}
+	
+	public void plugWire(Wire w){
+		on_wire = w;
 	}
 	
 	public void unplug(){
@@ -38,6 +43,10 @@ public class  WNode {
 
 	public Signal getSignal() {
 		return signal_value;
+	}
+	
+	public void setSignal(Signal s){
+		signal_value = s;
 	}
 	
 	public Point getCordinates() {
