@@ -33,6 +33,17 @@ public class ForkThree extends OneMany implements Pushable{
 		gateDelay = 0;
 	}
 	
+	public boolean pushSignal(){
+		if (super.pushSignal()){
+			Signal inX = input.get("x").getSignal();
+			output.get("u").getSignal().setValue(inX.getValue());
+			output.get("m").getSignal().setValue(inX.getValue());
+			output.get("d").getSignal().setValue(inX.getValue());
+			return true;
+		}else 
+			return false;
+		}
+	
 	//TODO appropriate graph
 	 @Override
 	 public void paint(Graphics g) {

@@ -10,9 +10,10 @@ import logicComponent.*;
 import main.Signal;
 import wireComponent.Point;
 import wireComponent.WNode;
+import main.*;
 
 
-public class OneMany extends LogicComponent {
+public class OneMany extends LogicComponent implements Pushable{
 	int width = 50;
 	int height = 25;
 	
@@ -66,14 +67,19 @@ public class OneMany extends LogicComponent {
 		setCordinates(c);
 	}
 	
-	public void pushSignal(){
-		Signal inX = input.get("x").getSignal();
-		Iterator outNode = output.values().iterator();
-		while (outNode.hasNext()){
-			WNode nextBranch = (WNode)outNode.next();
-			nextBranch.getSignal().setGateDelay(inX.getGateDelay());
-			nextBranch.getSignal().setValue(inX.getValue());;
-			}
+	public boolean pushSignal(){
+		WNode inX = input.get("x");
+		if (inX.isReady()){
+			pathDeph = inX.getSignal().getGateDelay(); 
+			Iterator outNode = output.values().iterator();
+			while (outNode.hasNext()){
+				WNode nextBranch = (WNode)outNode.next();
+				nextBranch.getSignal().setGateDelay(inX.getSignal().getGateDelay() + gateDelay);
+				nextBranch.setReady(true);
+				}
+			return true;
+		}else
+			return false;
 	}
 	
 	@Override

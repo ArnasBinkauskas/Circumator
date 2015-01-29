@@ -6,8 +6,9 @@ import java.awt.Graphics;
 import logicComponent.*;
 import wireComponent.Point;
 import wireComponent.WNode;
+import main.*;
 
-public abstract class OneOne extends LogicComponent {
+public abstract class OneOne extends LogicComponent implements Pushable {
 	/*From LogicComponent
 	 * Map<String, ENode> input; 
 	 * Map<String, SNode> output;
@@ -34,6 +35,7 @@ public abstract class OneOne extends LogicComponent {
 	
 	public OneOne(String gateID, WNode in_node, WNode out_node, Point centreCoords){
 		super(1,1);
+		ID = gateID;
 		input.put("x", null);
 		output.put("u", null);
 		plugInput(in_node, "x");
@@ -47,6 +49,18 @@ public abstract class OneOne extends LogicComponent {
 		inCordY = center.getY() + height/2;
 		outCordX = center.getX() + width + width/5;
 		outCordY = center.getY() + height/2;
+	}
+	
+	public boolean pushSignal(){
+		WNode in = input.get("x");
+		WNode out = output.get("u");
+		if (in.isReady()){
+			pathDeph = in.getSignal().getGateDelay();
+			out.getSignal().setGateDelay(pathDeph + gateDelay);
+			out.setReady(true);
+			return true;
+		}else 
+			return false;
 	}
 	
 	 @Override

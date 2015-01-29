@@ -27,12 +27,26 @@ public class Wire implements Pushable {
 		end.plugWire(this);
 	}
 	
-	public void pushSignal(){
-		end.setSignal(start.getSignal());
+	public boolean pushSignal(){
+		if (start.isReady()){
+			end.setSignal(start.getSignal());
+			end.getSignal().setGateDelay(start.getSignal().getGateDelay());
+			end.setReady(true);
+			return true;
+		}else 
+			return false;
 	}
 	
 	public String toString(){
 		return wireID + " (" + start.toString() + "," + end.toString() + ")";
+	}
+	
+	public WNode getStart(){
+		return start;
+	}
+	
+	public WNode getEnd(){
+		return end;
 	}
 	
 	public void setStart(WNode Start){

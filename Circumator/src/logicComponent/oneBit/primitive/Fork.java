@@ -34,14 +34,14 @@ public class Fork extends OneMany implements Pushable{
 	}
 	
 	
-	public void pushSignal(){
-		Signal inX = input.get("x").getSignal();
-		Iterator outNode = output.values().iterator();
-		while (outNode.hasNext()){
-			WNode nextBranch = (WNode)outNode.next();
-			nextBranch.getSignal().setGateDelay(inX.getGateDelay());
-			nextBranch.getSignal().setValue(inX.getValue());;
-			}
+	public boolean pushSignal(){
+		if (super.pushSignal()){
+			Signal inX = input.get("x").getSignal();
+			output.get("u").getSignal().setValue(inX.getValue());
+			output.get("d").getSignal().setValue(inX.getValue());
+			return true;
+		}else 
+			return false;
 		}
 	
 	//TODO appropriate graph

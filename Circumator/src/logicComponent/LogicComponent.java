@@ -1,13 +1,15 @@
 package logicComponent;
-import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Collection;
 import java.util.HashMap;
 
+
+import main.*;
 import wireComponent.*;
 
 //All Components will have a Node input with a meaningful name
 //Input and output names MUST be different
-public class LogicComponent {
+public class LogicComponent implements Pushable {
 	public String ID;
 	
 	public HashMap<String, WNode> input; 
@@ -17,6 +19,8 @@ public class LogicComponent {
 	//gate delay 1 by default
 	public int gateDelay;
 	public String label;
+	
+	public int pathDeph;
 
 
 	
@@ -37,11 +41,15 @@ public class LogicComponent {
 	 * Implement to show signals on inputs and outputs
 	 */
 	public String toString(){
-		String ans = "Inputs: ";
-        ans += "/n";
-        ans += "Outputs: ";
-        ans += "/n";
-		return ans;
+		return ID;
+	}
+	
+	public Collection<WNode> getInputs(){
+		return input.values();
+	}
+	
+	public Collection<WNode> getOutputs(){
+		return output.values();
 	}
 	
 	public void setCordinates(Point c){
@@ -63,7 +71,7 @@ public class LogicComponent {
 	 * */
 	public void plugInput(WNode n, String in_name){
 		n.plugTo(this);
-		input.putIfAbsent(in_name, n);
+		input.put(in_name, n);
 	}
 	
 	/**
@@ -71,7 +79,17 @@ public class LogicComponent {
 	 * */
 	public void plugOutput(WNode n, String out_name){
 		n.plugTo(this);
-		input.putIfAbsent(out_name, n);
+		output.put(out_name, n);
+	}
+	
+	/**TODO implement this for high level circuits
+	 * Must check that all input nodes are ready, if so:
+	 * -update pathDepth of LogicComponent 
+	 * -update Gate delays of all outputs
+	 * -set output WNodes to be 'ready'
+	 * */
+	public boolean pushSignal(){
+	return true;
 	}
 	
 	//TODO appropriate graph

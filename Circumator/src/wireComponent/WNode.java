@@ -12,10 +12,44 @@ public class  WNode {
 	Point coordinates;
 	LogicComponent plugedTo; //pointer to the component the node is plugged to
 	Wire on_wire;
+	boolean ready;
 		
 	public WNode(String ID){
 			nodeID = ID;
 			signal_value = new Signal();
+			ready = false;
+	}
+	
+	public boolean isReady(){
+		return ready;
+	}
+	
+	public void setReady(boolean t){
+		ready = t;
+	}
+	//is this node a start of the wire?
+	public boolean isWStart(){
+		return this.isEqual(on_wire.start);
+	}
+	
+	public boolean isWEnd(){
+		return this.isEqual(on_wire.end);
+	}
+	
+	public Wire getWire(){
+		return on_wire;
+	}
+	
+	public boolean hasWire(){
+		return on_wire != null;
+	}
+	
+	public boolean hasComponent(){
+		return plugedTo != null;
+	}
+	
+	public LogicComponent getComponent(){
+		return plugedTo;
 	}
 	
 	public void plugTo(LogicComponent c){

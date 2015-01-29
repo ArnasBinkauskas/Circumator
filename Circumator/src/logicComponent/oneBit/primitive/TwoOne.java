@@ -6,8 +6,10 @@ import java.awt.Graphics;
 import logicComponent.*;
 import wireComponent.Point;
 import wireComponent.WNode;
+import main.Pushable;
+import main.Signal;
 
-public abstract class TwoOne extends LogicComponent{
+public abstract class TwoOne extends LogicComponent implements Pushable{
 	/*From LogicComponent
 	 * Map<String, ENode> input; 
 	 * Map<String, SNode> output;
@@ -24,7 +26,6 @@ public abstract class TwoOne extends LogicComponent{
 	int outUCordX ;
 	int outUCordY ;
 	
-	int gateDelay = 1;
 	/**
 	 * No value constructor- initialise input/output names
 	 * */
@@ -46,6 +47,24 @@ public abstract class TwoOne extends LogicComponent{
 		plugInput(in_nodeY, "y");
 		plugOutput(out_node, "u");
 		setCordinates(centreCoords);
+	}
+	
+	/**attempts to push the signals over the gate iff both of the input nodes are ready
+	*Updates pathDeph of the gate and the gate delay of the output signal in the process
+	*returns false if one of the inputs is not ready
+	*/
+	public boolean pushSignal(){
+		WNode inX = input.get("x");
+		WNode inY = input.get("y");
+		WNode out = output.get("u");
+		boolean inputsReady = inX.isReady() && inY.isReady();
+		if (inputsReady){
+			int signalPathDeph = Math.max(inX.getSignal().getGateDelay(), inY.getSignal().getGateDelay());
+			pathDeph = signalPathDeph;
+			out.getSignal().setGateDelay(signalPathDeph + gateDelay);
+			out.setReady(true);
+		}
+		return inputsReady;
 	}
 	
 	public void setGateDelay(int value){

@@ -13,28 +13,37 @@ import main.*;
 
 
 	
-public class And extends TwoOne implements Pushable{
+public class And extends TwoOne{
 	/**
 	 * No value constructor- initialise input/output names
 	 * */
 	public And(){
 		super();
 		label = "And";
+		gateDelay = 1;
 	}
 	
 	public And(String gateID, WNode in_nodeX, WNode in_nodeY, WNode out_node, Point centreCoords){
 		super(gateID, in_nodeX, in_nodeY, out_node, centreCoords);
 		label = "And";
+		gateDelay = 1;
 	}
 	
-	public void pushSignal(){
-		Signal inX = input.get("x").getSignal();
-		Signal inY = input.get("y").getSignal();
-		Signal out = output.get("u").getSignal();
-		if ((inX != null) && (inY != null) && (out != null)){
-			out.setGateDelay(Math.max(inX.getGateDelay(), inY.getGateDelay()) + gateDelay);
+	/**attempts to push the signals over the gate iff both of the input nodes are ready
+	*Updates pathDeph of the gate and the gate delay of the output signal in the process
+	*Also updates the output signal value according to the gate logic
+	*returns false if one of the inputs is not ready
+	*/
+	@Override
+	public boolean pushSignal(){
+		if (super.pushSignal()){
+			Signal inX = input.get("x").getSignal();
+			Signal inY = input.get("y").getSignal();
+			Signal out = output.get("u").getSignal();
 			out.setValue((inX.getValue() && inY.getValue()));
-		}
+			return true;
+		}else 
+			return false;
 	}
 	
 

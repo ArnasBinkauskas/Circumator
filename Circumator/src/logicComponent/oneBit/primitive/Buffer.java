@@ -17,20 +17,23 @@ public class Buffer extends OneOne implements Pushable{
 	public Buffer(){
 		super();
 		label = "Buffer";
+		gateDelay = 1;
 	}
 	
 	public Buffer(String gateID, WNode in_node, WNode out_node, Point centreCoords){
 		super(gateID, in_node, out_node, centreCoords);
 		label = "Buffer";
+		gateDelay = 1;
 	}
 		
-	public void pushSignal(){
-		Signal in = input.get("x").getSignal();
-		Signal out = output.get("u").getSignal();
-		if ((in != null) && (out != null)){
-			out.setGateDelay(in.getGateDelay() + gateDelay);
+	public boolean pushSignal(){
+		if (super.pushSignal()){
+			Signal in = input.get("x").getSignal();
+			Signal out = output.get("u").getSignal();
 			out.setValue(in.getValue());
-		}
+			return true;
+		}else 
+			return false;
 	}
 	
 }

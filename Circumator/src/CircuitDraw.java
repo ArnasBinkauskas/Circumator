@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import logicComponent.LogicComponent;
 import logicComponent.oneBit.primitive.*;
 import wireComponent.*;
 import wireComponent.Point;
@@ -11,7 +12,21 @@ import wireComponent.Point;
 public class CircuitDraw extends JFrame {
 	
 	public static void main(String args[]){
-			new CircuitDraw();
+		ArrayList<ArrayList<Integer>> gateWithDeph = new ArrayList<ArrayList<Integer>>();
+		for (int i = 0; i < 10; i++){
+			ArrayList<Integer> a = new ArrayList<Integer>();
+			gateWithDeph.add(a);
+			}
+		gateWithDeph.get(1).add(666);
+		gateWithDeph.get(1).add(12);
+		gateWithDeph.get(1).add(18);
+		gateWithDeph.get(5).add(6);
+		gateWithDeph.get(2).add(14);
+		for (ArrayList<Integer> a : gateWithDeph)
+			for (Integer t:a)
+				System.out.println(t);
+		
+			//new CircuitDraw();
 	}
 	
 	public CircuitDraw(){
@@ -26,18 +41,5 @@ public class CircuitDraw extends JFrame {
 	}
 	 
 	 public void paint(Graphics g) {
-		   ArrayList<Point> f = new ArrayList<Point>();
-		   f.add(new Point(50, 60));
-		   f.add(new Point(50, 40));
-		   f.add(new Point(70, 40));
-		   Wire b = new Wire("b");
-		   WNode Start = new WNode("s");
-		   Start.setCordinates(new Point(40,60));
-		   WNode End = new WNode("e");
-		   End.setCordinates(new Point(72, 45));
-		   b.setStart(Start);
-		   b.setCoordinates(f);
-		   b.setEnd(End);
-		   b.paint(g);
 	}
 }

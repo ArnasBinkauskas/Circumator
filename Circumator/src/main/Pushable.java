@@ -1,5 +1,7 @@
 package main;
 
+import wireComponent.*;
+
 public interface Pushable {
-	void pushSignal();
+	boolean pushSignal();
 }
