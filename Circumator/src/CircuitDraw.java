@@ -41,5 +41,6 @@ public class CircuitDraw extends JFrame {
 	}
 	 
 	 public void paint(Graphics g) {
+		 
 	}
 }

@@ -17,7 +17,7 @@ import java.io.IOException;
 public class Scrach extends JFrame {
 	static Model m;
 	static ArrayList<ArrayList<LogicComponent>> gateWithDeph;
-	static int delay = 500;
+	static int delay = 100;
 	
 	public static void main(String args[])  throws Exception{
 	m = new Model();
@@ -54,7 +54,7 @@ public class Scrach extends JFrame {
 		while (!readyNodes.isEmpty()){
 			try {
 				System.out.println(readyNodes.toString());
-				Thread.sleep(500);
+				Thread.sleep(delay);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -93,7 +93,30 @@ public class Scrach extends JFrame {
 				  //System.out.println(ID);
 				  m.comp.get(ID).paint(g);
 		 	}
+				animate(g);
 			 
+	 }
+	 
+	 public static void animate(Graphics g){
+		 try{
+		 Thread.sleep(5000);
+		 }catch(InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 for(int i = 0; i < m.comp.size(); i++){
+				//System.out.print("" + i + " ");
+			 try{
+				for (LogicComponent a : gateWithDeph.get(i))
+					a.pass(g);
+				Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+					//System.out.print(a.toString() + " ; ");
+				//System.out.println();
+			}			
 	 }
 	
 	

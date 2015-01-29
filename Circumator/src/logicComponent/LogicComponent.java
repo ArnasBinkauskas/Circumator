@@ -1,8 +1,8 @@
 package logicComponent;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Collection;
 import java.util.HashMap;
-
 
 import main.*;
 import wireComponent.*;
@@ -94,6 +94,11 @@ public class LogicComponent implements Pushable {
 	
 	//TODO appropriate graph
 	 public void paint(Graphics g) {
+	 }
+	 
+	 public void pass(Graphics g){
+		 g.setColor(Color.green);
+		 g.fillRect(center.getX(), center.getY(), 10, 10);
 	 }
 }
 				
