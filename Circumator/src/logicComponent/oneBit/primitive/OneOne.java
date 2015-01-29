@@ -43,9 +43,9 @@ public abstract class OneOne extends LogicComponent {
 	
 	@Override
 	public void updateInOut(){
-		inCordX = center.getX() - width/10;
+		inCordX = center.getX() - width/5;
 		inCordY = center.getY() + height/2;
-		outCordX = center.getX() + width + width/10;
+		outCordX = center.getX() + width + width/5;
 		outCordY = center.getY() + height/2;
 	}
 	
@@ -55,6 +55,6 @@ public abstract class OneOne extends LogicComponent {
 		    g.drawRect(center.getX(),center.getY(), width,height);
 		    g.drawString(label, center.getX() + 8, center.getY() + 18);
 		    g.drawLine(center.getX(), inCordY, inCordX, inCordY);
-		    g.drawLine(outCordX - width/10, outCordY, outCordX, outCordY);
+		    g.drawLine(outCordX - width/5, outCordY, outCordX, outCordY);
 	 }
 }

@@ -15,12 +15,14 @@ public class Wire implements Pushable {
 	
 	public Wire(String WireID){
 		wireID = WireID;
+		wireCoords = new ArrayList<Point>();
 	}
 	
 	public Wire(String WireID, WNode Start, WNode End){
 		wireID = WireID;
 		start = Start;
 		end = End;
+		wireCoords = new ArrayList<Point>();
 		start.plugWire(this);
 		end.plugWire(this);
 	}
@@ -45,17 +47,32 @@ public class Wire implements Pushable {
 		wireCoords = WireCords;
 	} 
 	
-	 public void paint(Graphics g) {
+	public void paint(Graphics g) {
 		    g.setColor(Color.black);
 		    Point from = start.getCordinates();
-		    Iterator cIter = wireCoords.iterator();
 		    Point to;
-		    while (cIter.hasNext()){
-		    	to = (Point)cIter.next();
+		    for (Point buffer : wireCoords){
+		    	to = buffer;
 		    	g.drawLine(from.getX(), from.getY(), to.getX(), to.getY());
 		    	from = to;
 		    }
 		    to = end.getCordinates();
 		    g.drawLine(from.getX(), from.getY(), to.getX(), to.getY());
 	 }
+	 
+	public void paintWInfo(Graphics g) {
+	    g.setColor(Color.black);
+	    Point from = start.getCordinates();
+	    start.paint(g);
+	    Point to;
+	    for (Point buffer : wireCoords){
+	    	to = buffer;
+	    	g.drawLine(from.getX(), from.getY(), to.getX(), to.getY());
+	    	from = to;
+	    }
+	    to = end.getCordinates();
+	    end.paint(g);
+	    g.drawLine(from.getX(), from.getY(), to.getX(), to.getY());
+ }
+	 
 }

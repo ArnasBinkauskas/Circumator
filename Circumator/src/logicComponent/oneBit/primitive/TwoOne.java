@@ -13,7 +13,7 @@ public abstract class TwoOne extends LogicComponent{
 	 * Map<String, SNode> output;
 	 * */
 	int width = 50;
-	int height = 25;
+	int height = 24;
 	
 	int inXCordX ;
 	int inXCordY ;
@@ -54,13 +54,13 @@ public abstract class TwoOne extends LogicComponent{
 	
 	@Override
 	public void updateInOut(){
-		inXCordX = center.getX() - width/10;
+		inXCordX = center.getX() - width/5;
 		inXCordY = center.getY() + height/4;
 		
-		inYCordX = center.getX() - width/10;
+		inYCordX = center.getX() - width/5;
 		inYCordY = center.getY() + (height/4) * 3;
 		
-		outUCordX = center.getX() + width + width/10;
+		outUCordX = center.getX() + width + width/5;
 		outUCordY = center.getY() + height/2;
 	}
 	
@@ -71,7 +71,7 @@ public abstract class TwoOne extends LogicComponent{
 		    g.drawString(label, center.getX() + 8, center.getY() + 18);
 		    g.drawLine(center.getX(), inXCordY, inXCordX, inXCordY);
 		    g.drawLine(center.getX(), inYCordY, inYCordX, inYCordY);
-		    g.drawLine(outUCordX - width/10, outUCordY, outUCordX, outUCordY);
+		    g.drawLine(outUCordX - width/5, outUCordY, outUCordX, outUCordY);
 	 }
 	
 }

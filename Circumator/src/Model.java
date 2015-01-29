@@ -57,7 +57,7 @@ public class Model {
 			WNode n = new WNode(buffer[0]);
 			n.setCordinates(new Point( Integer.parseInt(cords[0]), 
 									   Integer.parseInt(cords[1])));
-			node.putIfAbsent(buffer[0], n);
+			node.put(buffer[0], n);
 		}
 		
 
@@ -81,7 +81,7 @@ public class Model {
 				}
 				w.setCoordinates(moreCoords);
 			}
-			wire.putIfAbsent(buffer[0], w);
+			wire.put(buffer[0], w);
 		}
 	}
 	
@@ -129,7 +129,7 @@ public class Model {
 		if (c.equals(null))
 			System.out.println("Unknown Component");
 		else
-			comp.putIfAbsent(buffer[0], c);
+			comp.put(buffer[1], c);
 	}
 	
 	public And readAnd1(String[] netLine){

@@ -1,5 +1,8 @@
 package wireComponent;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 import logicComponent.LogicComponent;
 import main.Signal;
 
@@ -60,5 +63,9 @@ public class  WNode {
 	public boolean isEqual(WNode n){
 		return n.nodeID.equals(this.nodeID);
 	}
-
+	
+	 public void paint(Graphics g) {
+		    g.setColor(Color.black);
+		    g.drawString(nodeID, coordinates.getX() - 5, coordinates.getY() - 2);
+	 }	    
 }
