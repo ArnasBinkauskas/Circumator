@@ -85,11 +85,20 @@ public class LogicComponent implements Pushable {
 	/**TODO implement this for high level circuits
 	 * Must check that all input nodes are ready, if so:
 	 * -update pathDepth of LogicComponent 
-	 * -update Gate delays of all outputs
 	 * -set output WNodes to be 'ready'
+	 * child classes are responsible to update their output delays
+	 * and signal values.
 	 * */
 	public boolean pushSignal(){
-	return true;
+		int maxInDelay = 0; 
+		for (WNode in: input.values()){
+			if (!in.isReady())
+				return false;
+			if (maxInDelay < in.getSignal().getGateDelay())
+				maxInDelay = in.getSignal().getGateDelay();
+		}
+		pathDeph = maxInDelay;
+		return true;
 	}
 	
 	//TODO appropriate graph
