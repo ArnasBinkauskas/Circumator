@@ -1,7 +1,8 @@
-/BasicDirectedGraph$MyLink.class
-/BasicDirectedGraph$MyNode.class
-/BasicDirectedGraph.class
-/BasicDirectedGraph$1.class
-/BasicDirectedGraph$2.class
-/BasicDirectedGraph$3.class
-/SimpleGraphView.class
+/logicComponent/
+/main/
+/wireComponent/
+/CircuitDraw$1.class
+/CircuitDraw.class
+/Model.class
+/Scrach$1.class
+/Scrach.class
