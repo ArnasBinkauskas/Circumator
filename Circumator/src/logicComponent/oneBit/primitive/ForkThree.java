@@ -15,6 +15,7 @@ import main.*;
  * */
 
 public class ForkThree extends OneMany implements Pushable{
+	int radius = 10;
 	/**
 	 * No value constructor- initialise input/output names
 	 * */
@@ -48,9 +49,11 @@ public class ForkThree extends OneMany implements Pushable{
 	 @Override
 	 public void paint(Graphics g) {
 		    g.setColor(Color.black);
-		    g.drawRect(center.getX(),center.getY(), width,height);
-		    g.drawString(label, center.getX() + 8, center.getY() + 18);
-		    g.drawLine(center.getX(), inXCordY, inXCordX, inXCordY);
+		    g.fillOval(center.getX() - radius/2,center.getY() - radius/2, radius, radius);
+		    for (WNode in : input.values())
+		    	g.drawLine(center.getX(), center.getY(), in.getCordinates().getX(), in.getCordinates().getY());
+		    for (WNode out : output.values())
+		    	g.drawLine(center.getX(), center.getY(), out.getCordinates().getX(), out.getCordinates().getY());
 	 }
 	
 	

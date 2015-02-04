@@ -63,7 +63,7 @@ public class Demux extends LogicComponent implements Pushable{
 		}else 
 			return false;
 	}
-	@Override
+
 	public void updateInOut(){
 		
 		dataCoord.setX(center.getX() - width/5);

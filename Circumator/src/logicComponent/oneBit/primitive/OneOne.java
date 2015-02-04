@@ -43,7 +43,7 @@ public abstract class OneOne extends LogicComponent implements Pushable {
 		setCordinates(centreCoords);
 	}
 	
-	@Override
+
 	public void updateInOut(){
 		inCordX = center.getX() - width/5;
 		inCordY = center.getY() + height/2;

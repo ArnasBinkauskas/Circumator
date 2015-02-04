@@ -62,7 +62,7 @@ public class Mux extends LogicComponent implements Pushable{
 		}else 
 			return false;
 	}
-	@Override
+	
 	public void updateInOut(){
 		
 		data0Coord.setX(center.getX() - width/5);

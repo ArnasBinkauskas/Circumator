@@ -14,12 +14,6 @@ import main.*;
 
 
 public class OneMany extends LogicComponent implements Pushable{
-	int width = 50;
-	int height = 25;
-	
-	int inXCordX;
-	int inXCordY;
-	
 	
 	/**
 	 * No value constructor- initialise input/output names
@@ -32,6 +26,7 @@ public class OneMany extends LogicComponent implements Pushable{
 		setCordinates(new Point(0,0));
 	}
 	
+	
 	public OneMany(String cID, WNode in_nodeX, WNode out_nodeU, WNode out_nodeD, Point c){
 		super(1,2);
 		input.put("x", null);
@@ -41,6 +36,7 @@ public class OneMany extends LogicComponent implements Pushable{
 		ID = cID;
 		setCordinates(c);
 	}
+	
 	
 	public OneMany(String cID, WNode in_nodeX, WNode out_nodeU, WNode out_nodeM, WNode out_nodeD, Point c){
 		super(1,2);
@@ -81,12 +77,4 @@ public class OneMany extends LogicComponent implements Pushable{
 		}else
 			return false;
 	}
-	
-	@Override
-	public void updateInOut(){
-		inXCordX = center.getX() - width/10;
-		inXCordY = center.getY() + height/4;
-	
-	}
-	
 }

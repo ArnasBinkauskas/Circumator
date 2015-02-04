@@ -71,7 +71,6 @@ public abstract class TwoOne extends LogicComponent implements Pushable{
 		gateDelay = value;
 	}
 	
-	@Override
 	public void updateInOut(){
 		inXCordX = center.getX() - width/5;
 		inXCordY = center.getY() + height/4;

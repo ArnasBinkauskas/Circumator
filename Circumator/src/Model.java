@@ -19,6 +19,8 @@ public class Model {
 	ArrayList<WNode> start;
 	ArrayList<WNode> end;
 	
+	Point windowSize;
+	
 	public Model(){};
 	
 	/**
@@ -26,10 +28,18 @@ public class Model {
 	 * Assumes Data is correct (used netlist model)
 	 * */
 	public void readFile(String filename) throws IOException{
+		windowSize = new Point(0,0);
+		node = new HashMap<String, WNode>();
+		wire = new HashMap<String, Wire>();
+		comp = new HashMap<String, LogicComponent>();
+		
 		Scanner sc = new Scanner(new File(filename));
 		CircuitName = sc.nextLine();
+		if (sc.nextLine().equals("clock")){
+			node.put("clock", new WNode("clock"));
+			sc.nextLine(); //String Nodes
+		}
 		//reading in nodes
-		sc.nextLine(); //String Nodes
         // Read up until Wires
 		parseForNodes(sc.nextLine());
 		sc.nextLine();
@@ -47,16 +57,17 @@ public class Model {
 	}
 	
 	public void parseForNodes(String raw){
-		node = new HashMap<String, WNode>();
 		String[] allNodes = raw.split("; ");
 		String[] buffer;
 		for (int i = 0; i < allNodes.length; i++ ){
 			buffer = allNodes[i].split(" ");
 			//get rid of brakets and commas
-			String[] cords = buffer[1].substring(1, buffer[1].length() - 1).split(",");
+			String[] coord = buffer[1].substring(1, buffer[1].length() - 1).split(",");
 			WNode n = new WNode(buffer[0]);
-			n.setCordinates(new Point( Integer.parseInt(cords[0]), 
-									   Integer.parseInt(cords[1])));
+			Point temp = new Point( Integer.parseInt(coord[0]), 
+					   				Integer.parseInt(coord[1]));
+			windowSize.increaseTo(temp);
+			n.setCordinates(temp);
 			node.put(buffer[0], n);
 		}
 		
@@ -64,7 +75,6 @@ public class Model {
 	}
 	
 	public void parseForWires(String raw){
-		wire = new HashMap<String, Wire>();
 		String[] allWires = raw.split("; ");
 		String[] buffer;
 		for (int i = 0; i < allWires.length; i++ ){
@@ -76,8 +86,10 @@ public class Model {
 				String[] c = buffer[2].split(":");
 				for (int j = 0; j < c.length; j ++){
 					String[] coord = c[j].substring(1, c[j].length() - 1).split(",");
-					moreCoords.add(new Point( Integer.parseInt(coord[0]), 
-									          Integer.parseInt(coord[1])));
+					Point temp = new Point( Integer.parseInt(coord[0]), 
+							   				Integer.parseInt(coord[1]));
+					windowSize.increaseTo(temp);
+					moreCoords.add(temp);
 				}
 				w.setCoordinates(moreCoords);
 			}
@@ -86,7 +98,6 @@ public class Model {
 	}
 	
 	public void parseForComponents(String raw){
-		comp = new HashMap<String, LogicComponent>();
 		String[] compLine = raw.split("\n");
 		for (String line : compLine)
 			readComponent(line);
@@ -107,6 +118,7 @@ public class Model {
 	}
 	
 	public void readComponent(String line){
+		System.out.println(line);
 		String[] buffer = line.split(" ");
 		LogicComponent c;
 		for (int i = 2; i < 5; i++)
@@ -124,9 +136,16 @@ public class Model {
 			c = readFork12(buffer);
 		else if (buffer[0].equals("fork13"))
 			c = readFork13(buffer);
-		else c = null;
+		else if (buffer[0].equals("reg1"))
+			c = readRegister(buffer);
+		else if (buffer[0].equals("mux1"))
+			c = readMux(buffer);
+		else if (buffer[0].equals("demux1"))
+			c = readDemux(buffer);
+		else 
+			c = null;
 		
-		if (c.equals(null))
+		if (c == null)
 			System.out.println("Unknown Component");
 		else
 			comp.put(buffer[1], c);
@@ -183,10 +202,43 @@ public class Model {
 						computePoint(netLine[4]));
 	}
 	
+	public Register readRegister(String[] netLine){
+		String[] input = netLine[2].split(",");
+		return new Register(netLine[1], 
+							node.get(input[0]), 
+							node.get(input[1]),
+							node.get(input[2]),
+							node.get(netLine[3]), 
+							computePoint(netLine[4]));
+	}
+	
+	public Mux readMux(String[] netLine){
+		String[] input = netLine[2].split(",");
+		return new Mux(netLine[1], 
+							node.get(input[0]), 
+							node.get(input[1]),
+							node.get(input[2]),
+							node.get(netLine[3]), 
+							computePoint(netLine[4]));
+	}
+	
+	public Demux readDemux(String[] netLine){
+		String[] input = netLine[2].split(",");
+		String[] output = netLine[3].split(",");
+		return new Demux(netLine[1], 
+							node.get(input[0]), 
+							node.get(input[1]),
+							node.get(output[0]),
+							node.get(output[1]), 
+							computePoint(netLine[4]));
+	}
+	
 	public Point computePoint(String c){
 		String[] coord = c.split(",");
-		return new Point( Integer.parseInt(coord[0]), 
+		Point temp = new Point( Integer.parseInt(coord[0]), 
 				   Integer.parseInt(coord[1]));
+		windowSize.increaseTo(temp);
+		return temp;
 	}
 		
 }

@@ -54,10 +54,8 @@ public class LogicComponent implements Pushable {
 	
 	public void setCordinates(Point c){
 		center = c;
-		updateInOut();
 	}
 	
-	public void updateInOut(){}
 	
 	public void setLabel(String l){
 		label = l;

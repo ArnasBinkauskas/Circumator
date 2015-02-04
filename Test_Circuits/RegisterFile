@@ -7,12 +7,18 @@ w0 (n0,n5); w1 (n1,n6) (110,180); w2 (n2,n8); w3 (n3,n23) (390,380); w4 (n9,n19)
 Components
 mux1 "1_mux" (n4,n5,n6) (n9) (120,92)
 demux1 "1demux" (n7,n8) (n10,n11) (120,262)
-fork1 "1_fork" (n12) (n13,n14) (255,120)
-reg1 "1_reg" (n15,n16,clock) (280,104)
-reg1 "2_reg" (n17,n18,clock) (280,172)
+fork12 "1_fork" (n12) (n13,n14) (225,120)
+reg1 "1_reg" (n15,n16,clock) (n19) (280,104)
+reg1 "2_reg" (n17,n18,clock) (n20) (280,172)
 mux1 "2_mux" (n21,n22,n23) (n24) (400,128)
-fork1 "2_fork" (n25) (n26,n27) (485,156)
+fork12 "2_fork" (n25) (n26,n27) (485,156)
 buf1 "1_buf" (n28) (n30) (540,144)
 inv1 "1_inv" (n29) (n31) (540,214)
 inv1 "2_inv" (n32) (n33) (610,214)
 and1 "1_and" (n34,n35) (n36) (700,150)
+Start
+
+End
+
+Close
+

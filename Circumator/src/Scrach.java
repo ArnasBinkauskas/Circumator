@@ -22,13 +22,13 @@ public class Scrach extends JFrame {
 	public static void main(String args[])  throws Exception{
 	m = new Model();
 	m.readFile(args[0]);
-	simulate();
+	//simulate();
 	new Scrach();
 	}
 	
 	public Scrach(){
 		super("Attempt to draw!");
-		setSize(1100,250);
+		setSize(m.windowSize.getX() + 100, m.windowSize.getY() + 50);
 		setVisible(true);
 		addWindowListener(new WindowAdapter()
 		       {public void windowClosing(WindowEvent e)
@@ -93,7 +93,7 @@ public class Scrach extends JFrame {
 				  //System.out.println(ID);
 				  m.comp.get(ID).paint(g);
 		 	}
-				animate(g);
+				//animate(g);
 			 
 	 }
 	 

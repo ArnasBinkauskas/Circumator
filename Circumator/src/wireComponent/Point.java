@@ -36,4 +36,13 @@ public class Point {
 	public int getY(){
 		return y;
 	}
+	
+	/**TODO javadoc
+	 * */
+	public void increaseTo(Point p){
+		if (p.getX() > this.getX())
+			this.setX(p.getX());
+		if (p.getY() > this.getY())
+			this.setY(p.getY());
+	}
 }
