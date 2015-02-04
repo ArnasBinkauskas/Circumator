@@ -45,4 +45,10 @@ public class Point {
 		if (p.getY() > this.getY())
 			this.setY(p.getY());
 	}
+	
+	public void computeFrom(Point c, int xDiff, int yDiff){
+		this.setX(c.getX() + xDiff);
+		this.setY(c.getY() + yDiff);
+	}
+	
 }

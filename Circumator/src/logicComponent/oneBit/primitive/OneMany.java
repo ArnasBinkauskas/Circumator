@@ -23,7 +23,7 @@ public class OneMany extends LogicComponent implements Pushable{
 		input.put("x", null);
 		output.put("1", null);
 		output.put("2", null);
-		setCordinates(new Point(0,0));
+		setCoordinates(new Point(0,0));
 	}
 	
 	
@@ -34,7 +34,7 @@ public class OneMany extends LogicComponent implements Pushable{
 		plugOutput(out_nodeU, "u");
 		plugOutput(out_nodeD, "d");
 		ID = cID;
-		setCordinates(c);
+		setCoordinates(c);
 	}
 	
 	
@@ -45,7 +45,7 @@ public class OneMany extends LogicComponent implements Pushable{
 		plugOutput(out_nodeU, "u");
 		plugOutput(out_nodeM, "m");
 		plugOutput(out_nodeD, "d");
-		setCordinates(c);
+		setCoordinates(c);
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class OneMany extends LogicComponent implements Pushable{
 			output.put(i.toString(), null);
 			plugOutput(out_node.get(i), i.toString());
 		}
-		setCordinates(c);
+		setCoordinates(c);
 	}
 	
 	public boolean pushSignal(){

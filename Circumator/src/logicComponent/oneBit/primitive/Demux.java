@@ -10,9 +10,10 @@ import wireComponent.WNode;
 import main.*;
 
 public class Demux extends LogicComponent implements Pushable{
-	int width = 50;
+	int width = 40;
 	int height = 32;
 	
+	Point corner;
 	Point ldCoord;
 	Point dataCoord;
 	Point out0Coord;
@@ -26,21 +27,22 @@ public class Demux extends LogicComponent implements Pushable{
 		gateDelay = 2;
 	}
 	
-	public Demux(String gateID, WNode loadIn, WNode dataIn, WNode output1, WNode output2, 
+	public Demux(String gateID,  WNode dataIn, WNode loadIn, WNode output1, WNode output2, 
 			Point centerCoords){
 		super(2,2);
-		label = "demux";
+		label = "dmux";
 		gateDelay = 2;
 		ID = gateID;
-		center = centerCoords;
-		plugInput(loadIn, "ld");
+		plugInput(loadIn, "ldc");
 		plugInput(dataIn, "d");
 		plugOutput(output1, "out0");
 		plugOutput(output2, "out1");
-		ldCoord = new Point(0,0);
-		dataCoord = new Point(0,0);
-		out0Coord = new Point(0,0);
-		out1Coord = new Point(0,0);
+		corner = new Point();
+		ldCoord = new Point();
+		dataCoord = new Point();
+		out0Coord = new Point();
+		out1Coord = new Point();
+		setCoordinates(centerCoords);
 	}
 	
 	/**attempts to push the signals over the gate iff both of the input nodes are ready
@@ -51,7 +53,7 @@ public class Demux extends LogicComponent implements Pushable{
 	@Override
 	public boolean pushSignal(){
 		if (super.pushSignal()){
-			Signal inLd = input.get("ld").getSignal();
+			Signal inLd = input.get("ldc").getSignal();
 			Signal inData = input.get("d").getSignal();
 			Signal out0 = output.get("out0").getSignal();
 			Signal out1 = output.get("out1").getSignal();
@@ -63,32 +65,39 @@ public class Demux extends LogicComponent implements Pushable{
 		}else 
 			return false;
 	}
-
-	public void updateInOut(){
+	
+	@Override
+	public void updateCoords(){
 		
-		dataCoord.setX(center.getX() - width/5);
-		dataCoord.setY(center.getY() + height/4);
+		corner.computeFrom(center, 0 - width/2, 0 - height/2);
 		
-		ldCoord.setX(center.getX() - width/5);
-		ldCoord.setY(center.getY() + (height/4) * 3);
+		dataCoord.computeFrom(corner, 0, height/2);
 		
-		out0Coord.setX(center.getX() + width + width/5);
-		out0Coord.setY(center.getY() + height/4);
+		ldCoord.computeFrom(corner, width/2, height);
 		
-		out1Coord.setX(center.getX() + width + width/5);
-		out1Coord.setY(center.getY() + (height/4) * 3);
+		out0Coord.computeFrom(corner, width, height/4);
+		out1Coord.computeFrom(corner, width, (height/4) * 3);
 	}
 	
 	
 	@Override
 	 public void paint(Graphics g) {
 		    g.setColor(Color.black);
-		    g.drawRect(center.getX(),center.getY(), width,height);
-		    g.drawString(label, center.getX() + 8, center.getY() + 24);
-		    g.drawLine(center.getX(), dataCoord.getY(), dataCoord.getX(), dataCoord.getY());
-		    g.drawLine(center.getX(), ldCoord.getY(), ldCoord.getX(), ldCoord.getY());
-		    g.drawLine(out0Coord.getX() - width/5, out0Coord.getY(), out0Coord.getX(), out0Coord.getY());
-		    g.drawLine(out1Coord.getX() - width/5, out1Coord.getY(), out1Coord.getX(), out1Coord.getY());
+		    g.drawRect(corner.getX(),corner.getY(), width,height);
+		    g.drawString(label, center.getX() - 15, center.getY() + 4);
+		    
+		    g.drawLine(dataCoord.getX(), dataCoord.getY(), 
+		    			input.get("d").getCordinates().getX(),
+		    			input.get("d").getCordinates().getY());
+		    g.drawLine(ldCoord.getX(), ldCoord.getY(), 
+	    			input.get("ldc").getCordinates().getX(),
+	    			input.get("ldc").getCordinates().getY());
+		    g.drawLine(out0Coord.getX(), out0Coord.getY(), 
+	    			output.get("out0").getCordinates().getX(),
+	    			output.get("out0").getCordinates().getY());
+		    g.drawLine(out1Coord.getX(), out1Coord.getY(), 
+	    			output.get("out1").getCordinates().getX(),
+	    			output.get("out1").getCordinates().getY());
 	 }
 	
 

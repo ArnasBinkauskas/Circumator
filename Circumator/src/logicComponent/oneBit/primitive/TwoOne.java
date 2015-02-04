@@ -14,17 +14,14 @@ public abstract class TwoOne extends LogicComponent implements Pushable{
 	 * Map<String, ENode> input; 
 	 * Map<String, SNode> output;
 	 * */
-	int width = 50;
+	int width = 40;
 	int height = 24;
 	
-	int inXCordX ;
-	int inXCordY ;
-	
-	int inYCordX ;
-	int inYCordY ;
-	
-	int outUCordX ;
-	int outUCordY ;
+	Point corner;
+	Point inXCoord;
+	Point inYCoord;
+	Point outUCoord;
+
 	
 	/**
 	 * No value constructor- initialise input/output names
@@ -37,7 +34,6 @@ public abstract class TwoOne extends LogicComponent implements Pushable{
 		input.put("x", null);
 		input.put("y", null);
 		output.put("u", null);
-		setCordinates(new Point (0,0));
 	}
 	
 	public TwoOne(String gateID, WNode in_nodeX, WNode in_nodeY, WNode out_node, Point centreCoords){
@@ -46,7 +42,11 @@ public abstract class TwoOne extends LogicComponent implements Pushable{
 		plugInput(in_nodeX, "x");
 		plugInput(in_nodeY, "y");
 		plugOutput(out_node, "u");
-		setCordinates(centreCoords);
+		corner = new Point();
+		inXCoord = new Point();
+		inYCoord = new Point();
+		outUCoord = new Point();
+		setCoordinates(centreCoords);
 	}
 	
 	/**attempts to push the signals over the gate iff both of the input nodes are ready
@@ -71,25 +71,32 @@ public abstract class TwoOne extends LogicComponent implements Pushable{
 		gateDelay = value;
 	}
 	
-	public void updateInOut(){
-		inXCordX = center.getX() - width/5;
-		inXCordY = center.getY() + height/4;
+	@Override
+	public void updateCoords(){
+		corner.computeFrom(center, 0 - width/2, 0 - height/2);
 		
-		inYCordX = center.getX() - width/5;
-		inYCordY = center.getY() + (height/4) * 3;
+		inXCoord.computeFrom(corner, 0, height/4);
 		
-		outUCordX = center.getX() + width + width/5;
-		outUCordY = center.getY() + height/2;
+		inYCoord.computeFrom(corner, 0, (height/4) * 3);
+		
+		outUCoord.computeFrom(corner, width, height/2);
 	}
 	
 	 @Override
 	 public void paint(Graphics g) {
 		    g.setColor(Color.black);
-		    g.drawRect(center.getX(),center.getY(), width,height);
-		    g.drawString(label, center.getX() + 8, center.getY() + 18);
-		    g.drawLine(center.getX(), inXCordY, inXCordX, inXCordY);
-		    g.drawLine(center.getX(), inYCordY, inYCordX, inYCordY);
-		    g.drawLine(outUCordX - width/5, outUCordY, outUCordX, outUCordY);
+		    g.drawRect(corner.getX(),corner.getY(), width,height);
+		    g.drawString(label, center.getX() - 8, center.getY() + 4);
+		    
+		    g.drawLine(inXCoord.getX(), inXCoord.getY(), 
+		    			input.get("x").getCordinates().getX(), 
+		    			input.get("x").getCordinates().getY());
+		    g.drawLine(inYCoord.getX(), inYCoord.getY(), 
+	    				input.get("y").getCordinates().getX(), 
+	    				input.get("y").getCordinates().getY());
+		    g.drawLine(outUCoord.getX(), outUCoord.getY(), 
+	    				output.get("u").getCordinates().getX(), 
+	    				output.get("u").getCordinates().getY());		       
 	 }
 	
 }

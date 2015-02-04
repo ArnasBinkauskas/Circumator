@@ -52,9 +52,13 @@ public class LogicComponent implements Pushable {
 		return output.values();
 	}
 	
-	public void setCordinates(Point c){
+	public void setCoordinates(Point c){
 		center = c;
+		updateCoords();
 	}
+	
+	//implement for each class
+	public void updateCoords(){}
 	
 	
 	public void setLabel(String l){

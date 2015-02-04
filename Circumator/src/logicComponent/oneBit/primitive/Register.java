@@ -12,9 +12,10 @@ import main.*;
 public class Register extends LogicComponent implements Pushable{
 	Signal memory;
 	
-	int width = 50;
+	int width = 40;
 	int height = 64;
 	
+	Point corner;
 	Point dataCoord;
 	Point ldCoord;
 	Point outCoord;
@@ -32,17 +33,18 @@ public class Register extends LogicComponent implements Pushable{
 			Point centerCoords){
 		super(3,1);
 		memory = new Signal();
-		label = "Mux";
+		label = "Reg";
 		gateDelay = 3;
 		ID = gateID;
-		center = centerCoords;
 		plugInput(data, "d");
-		plugInput(ldControl, "1d");
+		plugInput(ldControl, "ldc");
 		plugInput(clock, "clock");
 		plugOutput(output, "out");
-		ldCoord = new Point(0,0);
-		dataCoord = new Point(0,0);
-		outCoord = new Point(0,0);
+		corner = new Point();
+		ldCoord = new Point();
+		dataCoord = new Point();
+		outCoord = new Point();
+		setCoordinates(centerCoords);
 	}
 	
 	/**attempts to push the signals over the gate iff both of the input nodes are ready
@@ -53,7 +55,7 @@ public class Register extends LogicComponent implements Pushable{
 	@Override
 	public boolean pushSignal(){
 		if (super.pushSignal()){
-			Signal inLd = input.get("ld").getSignal();
+			Signal inLd = input.get("ldc").getSignal();
 			Signal inData = input.get("d").getSignal();
 			Signal out = output.get("out").getSignal();
 			if (inLd.getValue())
@@ -65,26 +67,33 @@ public class Register extends LogicComponent implements Pushable{
 			return false;
 	}
 
-	public void updateInOut(){
+	@Override
+	public void updateCoords(){
 		
-		dataCoord.setX(center.getX() - width/5);
-		dataCoord.setY(center.getY() + height/4);
+		corner.computeFrom(center, 0 - width/2, 0 - height/2);
 		
-		ldCoord.setX(center.getX() - width/5);
-		ldCoord.setY(center.getY() + (height/4) * 3);
+		dataCoord.computeFrom(corner, 0, height/4);
 		
-		outCoord.setX(center.getX() + width + width/5);
-		outCoord.setY(center.getY() + height/2);
+		ldCoord.computeFrom(corner, 0, (height/4) * 3);
+		
+		outCoord.computeFrom(corner, width, height/2);
 	}
 	
 	
 	@Override
 	 public void paint(Graphics g) {
-		    g.setColor(Color.black);
-		    g.drawRect(center.getX(),center.getY(), width,height);
-		    g.drawString(label, center.getX() + 8, center.getY() + 24);
-		    g.drawLine(center.getX(), dataCoord.getY(), dataCoord.getX(), dataCoord.getY());
-		    g.drawLine(center.getX(), ldCoord.getY(), ldCoord.getX(), ldCoord.getY());
-		    g.drawLine(outCoord.getX() - width/5, outCoord.getY(), outCoord.getX(), outCoord.getY());
+		g.setColor(Color.black);
+	    g.drawRect(corner.getX(),corner.getY(), width,height);
+	    g.drawString(label, center.getX() - 8, center.getY() + 4);
+	    
+	    g.drawLine(dataCoord.getX(), dataCoord.getY(), 
+	    			input.get("d").getCordinates().getX(),
+	    			input.get("d").getCordinates().getY());
+	    g.drawLine(ldCoord.getX(), ldCoord.getY(), 
+    			input.get("ldc").getCordinates().getX(),
+    			input.get("ldc").getCordinates().getY());
+	    g.drawLine(outCoord.getX(), outCoord.getY(), 
+    			output.get("out").getCordinates().getX(),
+    			output.get("out").getCordinates().getY());
 	 }
 }
