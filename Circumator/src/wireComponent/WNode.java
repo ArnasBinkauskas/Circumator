@@ -29,11 +29,17 @@ public class  WNode {
 	}
 	//is this node a start of the wire?
 	public boolean isWStart(){
-		return this.isEqual(on_wire.start);
+		boolean ans = false;
+		try{ans = this.isEqual(on_wire.start);}
+		catch (NullPointerException e){}
+		return ans; 
 	}
 	
 	public boolean isWEnd(){
-		return this.isEqual(on_wire.end);
+		boolean ans = false;
+		try{ans = this.isEqual(on_wire.end);}
+		catch (NullPointerException e){}
+		return ans; 
 	}
 	
 	public Wire getWire(){
@@ -65,7 +71,9 @@ public class  WNode {
 	}
 	
 	public String toString(){
-		return nodeID + " " + coordinates.toString();
+		if (coordinates != null)
+			return nodeID + " " + coordinates.toString();
+		else return nodeID;
 	}
 	
 	

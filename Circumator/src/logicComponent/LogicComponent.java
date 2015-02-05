@@ -18,6 +18,9 @@ public class LogicComponent implements Pushable {
 	public Point center;
 	//gate delay 1 by default
 	public int gateDelay;
+	//components with gate delay > 1 will take more steps to paint
+	public int painted; 
+	
 	public String label;
 	
 	public int pathDeph;
@@ -67,6 +70,7 @@ public class LogicComponent implements Pushable {
 	
 	public void setGateDelay(int value){
 		gateDelay = value;
+		painted = gateDelay - 1;
 	}
 	/**
 	 *  Plugs a node into specific input slot
@@ -94,11 +98,14 @@ public class LogicComponent implements Pushable {
 	public boolean pushSignal(){
 		int maxInDelay = 0; 
 		for (WNode in: input.values()){
-			if (!in.isReady())
+			if (!in.isReady()){
 				return false;
+			}
 			if (maxInDelay < in.getSignal().getGateDelay())
 				maxInDelay = in.getSignal().getGateDelay();
 		}
+		for (WNode out: output.values())
+			out.setReady(true);
 		pathDeph = maxInDelay;
 		return true;
 	}
@@ -108,8 +115,12 @@ public class LogicComponent implements Pushable {
 	 }
 	 
 	 public void pass(Graphics g){
-		 g.setColor(Color.green);
-		 g.fillRect(center.getX(), center.getY(), 10, 10);
+		 if (painted < gateDelay){
+			 g.setColor(Color.green);
+			 g.fillRect(center.getX() - 20 + 10*painted, center.getY() -5, 10, 10);
+			 painted++;
+		 }
+		 paint(g);
 	 }
 }
 				

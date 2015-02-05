@@ -10,13 +10,17 @@ import logicComponent.*;
 import logicComponent.oneBit.primitive.*;
 import wireComponent.*;
 import wireComponent.Point;
+import main.Clocked;
+import wireComponent.Clock;
 
 public class Model {
+	Clock clock;
+	
 	String CircuitName;
 	HashMap<String, WNode> node;
 	HashMap<String, Wire> wire;
 	HashMap<String, LogicComponent> comp;
-	ArrayList<WNode> start;
+	HashMap<WNode, ArrayList<Boolean>> start;
 	ArrayList<WNode> end;
 	
 	Point windowSize;
@@ -32,11 +36,12 @@ public class Model {
 		node = new HashMap<String, WNode>();
 		wire = new HashMap<String, Wire>();
 		comp = new HashMap<String, LogicComponent>();
+		start = new HashMap<WNode, ArrayList<Boolean>>();
 		
 		Scanner sc = new Scanner(new File(filename));
 		CircuitName = sc.nextLine();
 		if (sc.nextLine().equals("clock")){
-			node.put("clock", new WNode("clock"));
+			clock = new Clock();
 			sc.nextLine(); //String Nodes
 		}
 		//reading in nodes
@@ -47,10 +52,10 @@ public class Model {
 		sc.nextLine();
 		sc.useDelimiter("\nStart\n");
 		parseForComponents(sc.next());
-		sc.nextLine();
-		sc.nextLine();
-		parseForStart(sc.nextLine());
-		sc.nextLine();
+		sc.nextLine(); sc.nextLine();
+		sc.useDelimiter("\nEnd\n");
+		parseForStart(sc.next());
+		sc.nextLine(); sc.nextLine();
 		parseForEnd(sc.nextLine());
 		sc.close();
 		
@@ -104,10 +109,10 @@ public class Model {
 	}
 	
 	public void parseForStart(String raw){
-		start = new ArrayList<WNode>();
-		String[] nodeS = raw.split(" ");
-		for (String ID: nodeS)
-			start.add(node.get(ID));
+		String[] nodeLine = raw.split("\n");
+		for (String line: nodeLine ){
+			readStartNode(line);
+		}
 	}
 	
 	public void parseForEnd(String raw){
@@ -118,7 +123,6 @@ public class Model {
 	}
 	
 	public void readComponent(String line){
-		System.out.println(line);
 		String[] buffer = line.split(" ");
 		LogicComponent c;
 		for (int i = 2; i < 5; i++)
@@ -202,14 +206,19 @@ public class Model {
 						computePoint(netLine[4]));
 	}
 	
+	//add output of a clocked component to the start list automaticaly
 	public Register readRegister(String[] netLine){
 		String[] input = netLine[2].split(",");
-		return new Register(netLine[1], 
+		start.put(node.get(input[0]), null);
+		start.put(node.get(input[1]), null);
+		Clocked c = new Register(netLine[1], 
 							node.get(input[0]), 
 							node.get(input[1]),
-							node.get(input[2]),
+							clock,
 							node.get(netLine[3]), 
 							computePoint(netLine[4]));
+		clock.plugComponent(c);
+		return (Register)c;
 	}
 	
 	public Mux readMux(String[] netLine){
@@ -231,6 +240,20 @@ public class Model {
 							node.get(output[0]),
 							node.get(output[1]), 
 							computePoint(netLine[4]));
+	}
+	
+	public void readStartNode(String raw){
+		String[] nodeLine = raw.split(" ");
+		ArrayList<Boolean> valueOnCycle = new ArrayList<Boolean>();
+		for(int i = 1; i < nodeLine.length; i ++)
+			valueOnCycle.add(valueHelp(nodeLine[i]));
+		start.put(node.get(nodeLine[0]), valueOnCycle);
+	}
+	
+	public boolean valueHelp(String a){
+		boolean ans = false;
+		ans = a.equals(1);
+		return ans;
 	}
 	
 	public Point computePoint(String c){

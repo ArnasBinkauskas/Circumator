@@ -17,8 +17,11 @@ inv1 "1_inv" (n29) (n31) (560,226)
 inv1 "2_inv" (n32) (n33) (630,226)
 and1 "1_and" (n34,n35) (n36) (720,162)
 Start
-n0 n1 n2 n3 n7
-
+n0 
+n1
+n2
+n3
+n7   
 End
 
 Close

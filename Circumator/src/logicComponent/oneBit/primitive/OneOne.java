@@ -32,8 +32,8 @@ public abstract class OneOne extends LogicComponent implements Pushable {
 		//ENode dummy_in = new ENode(new Wire(),"dummy");
 		//SNode dummy_out = new SNode(new Wire(),"dummy");
 		super(1,1);
-		input.put("x", null);
-		output.put("u", null);
+		input.put("in", null);
+		output.put("out", null);
 		setCoordinates(new Point(0,0));
 	}
 	

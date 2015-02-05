@@ -57,5 +57,10 @@ public class Fork extends OneMany implements Pushable{
 		    	g.drawLine(center.getX(), center.getY(), out.getCordinates().getX(), out.getCordinates().getY());
 	 }
 	
+	 @Override
+	 public void pass(Graphics g){
+			 g.setColor(Color.green);
+			 g.fillOval(center.getX() - radius/2,center.getY() - radius/2, radius, radius);
+	 }
 	
 }

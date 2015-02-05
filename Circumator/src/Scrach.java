@@ -17,17 +17,17 @@ import java.io.IOException;
 public class Scrach extends JFrame {
 	static Model m;
 	static ArrayList<ArrayList<LogicComponent>> gateWithDeph;
-	static int delay = 100;
+	static int delay = 1000;
 	
 	public static void main(String args[])  throws Exception{
 	m = new Model();
 	m.readFile(args[0]);
-	//simulate();
+	build();
 	new Scrach();
 	}
 	
 	public Scrach(){
-		super("Attempt to draw!");
+		super(m.CircuitName);
 		setSize(m.windowSize.getX() + 100, m.windowSize.getY() + 50);
 		setVisible(true);
 		addWindowListener(new WindowAdapter()
@@ -36,88 +36,75 @@ public class Scrach extends JFrame {
 		       }
 		     );
 	}
-	
-	public static void simulate(){
-		//The size will be the number of components in worst case(Linear circuit)
-		gateWithDeph = new ArrayList<ArrayList<LogicComponent>>();
-		for(int i = 0; i < m.comp.size(); i++)
-			gateWithDeph.add(new ArrayList<LogicComponent>());
-		
-		ArrayDeque<WNode> readyNodes = new ArrayDeque<WNode>();
-		//instanciate simulation
-		for (WNode starting: m.start){
-			starting.setReady(true);
-			readyNodes.add(starting);
-		}
-
-		WNode buffer;
-		while (!readyNodes.isEmpty()){
-			try {
-				System.out.println(readyNodes.toString());
-				Thread.sleep(delay);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			buffer = readyNodes.poll();
-			if (buffer.isWStart() && buffer.hasWire()){//push signal accross the wire
-				buffer.getWire().pushSignal();
-				readyNodes.add(buffer.getWire().getEnd());
-			}else if (buffer.isWEnd() && buffer.hasComponent() && buffer.getComponent().pushSignal()){ 
-					readyNodes.removeAll(buffer.getComponent().getInputs());
-					readyNodes.addAll(buffer.getComponent().getOutputs());
-					gateWithDeph.get(buffer.getComponent().pathDeph).add(buffer.getComponent());
-				}
-		}
-		
-		for(int i = 0; i < m.comp.size(); i++){
-			System.out.print("" + i + " ");
-			for (LogicComponent a : gateWithDeph.get(i))
-				System.out.print(a.toString() + " ; ");
-			System.out.println();
-		}			
-	}
 	 
-	 public void paint(Graphics g) {
-		 
-		 	for (String IDw: m.wire.keySet()){
+	/**Display the circuit on screen
+	 * 
+	 * */
+	public void paint(Graphics g) {
+		 	for (String IDw: m.wire.keySet())
 			  m.wire.get(IDw).paintWInfo(g);
-			/*  try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				}*/
-		 	}
-			  for(String ID : m.comp.keySet()){
-				  //System.out.println(ID);
+			for(String ID : m.comp.keySet())
 				  m.comp.get(ID).paint(g);
-		 	}
-				//animate(g);
-			 
+			animate(g);
 	 }
 	 
 	 public static void animate(Graphics g){
 		 try{
-		 Thread.sleep(5000);
+		 Thread.sleep(delay);
 		 }catch(InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+		 }
+		 
 		 for(int i = 0; i < m.comp.size(); i++){
-				//System.out.print("" + i + " ");
 			 try{
 				for (LogicComponent a : gateWithDeph.get(i))
 					a.pass(g);
 				Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-					//System.out.print(a.toString() + " ; ");
-				//System.out.println();
 			}			
 	 }
-	
-	
+	 
+	 /**Builds and displays on LUI the gateWithDepth matrix
+	  * This is later used in the simulation and animation of the circuit
+	  * */
+		public static void build(){
+			//The size will be the number of components in worst case(Linear circuit)
+			gateWithDeph = new ArrayList<ArrayList<LogicComponent>>();
+			for(int i = 0; i < m.comp.size() + 4; i++)
+				gateWithDeph.add(new ArrayList<LogicComponent>());
+			
+			ArrayDeque<WNode> readyNodes = new ArrayDeque<WNode>();
+			//instanciate simulation
+			for (WNode starting: m.start.keySet()){
+				starting.setReady(true);
+				readyNodes.add(starting);
+			}
+			m.clock.tick();
+			
+			WNode buffer;
+			while (!readyNodes.isEmpty()){
+				buffer = readyNodes.poll();
+				if (buffer.isWStart() && buffer.hasWire()){//push signal accross the wire
+					buffer.getWire().pushSignal();
+					readyNodes.add(buffer.getWire().getEnd());
+				}else if (buffer.isWEnd() && buffer.hasComponent() && buffer.getComponent().pushSignal()){ 
+						readyNodes.removeAll(buffer.getComponent().getInputs());
+						readyNodes.addAll(buffer.getComponent().getOutputs());
+						int gateDelay = buffer.getComponent().gateDelay;
+						while (gateDelay >= 0){
+							gateWithDeph.get(buffer.getComponent().pathDeph + gateDelay).add(buffer.getComponent());
+							gateDelay --;
+							System.out.println();
+						}
+					}
+			}
+			for(int i = 0; i < gateWithDeph.size(); i++){
+				System.out.print("" + i + " ");
+				for (LogicComponent a : gateWithDeph.get(i))
+					System.out.print(a.toString() + " ; ");
+				System.out.println();
+			}			
+		}
 }

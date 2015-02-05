@@ -28,8 +28,8 @@ public class Inverter extends OneOne implements Pushable{
 	
 	public boolean pushSignal(){
 		if (super.pushSignal()){
-			Signal in = input.get("x").getSignal();
-			Signal out = output.get("u").getSignal();
+			Signal in = input.get("in").getSignal();
+			Signal out = output.get("out").getSignal();
 			out.setValue(!in.getValue());
 			return true;
 		}else 

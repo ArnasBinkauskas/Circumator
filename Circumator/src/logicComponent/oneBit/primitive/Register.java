@@ -9,8 +9,10 @@ import wireComponent.Point;
 import wireComponent.WNode;
 import main.*;
 
-public class Register extends LogicComponent implements Pushable{
+public class Register extends LogicComponent implements Pushable, Clocked{
 	Signal memory;
+	
+	boolean justTicked;
 	
 	int width = 40;
 	int height = 64;
@@ -33,6 +35,7 @@ public class Register extends LogicComponent implements Pushable{
 			Point centerCoords){
 		super(3,1);
 		memory = new Signal();
+		justTicked = false;
 		label = "Reg";
 		gateDelay = 3;
 		ID = gateID;
@@ -54,7 +57,7 @@ public class Register extends LogicComponent implements Pushable{
 	*/
 	@Override
 	public boolean pushSignal(){
-		if (super.pushSignal()){
+		if (super.pushSignal() && justTicked){
 			Signal inLd = input.get("ldc").getSignal();
 			Signal inData = input.get("d").getSignal();
 			Signal out = output.get("out").getSignal();
@@ -62,6 +65,7 @@ public class Register extends LogicComponent implements Pushable{
 				memory.setValue(inData.getValue());
 			out.setValue(memory.getValue());
 			out.setGateDelay(pathDeph + gateDelay);
+			justTicked = false;
 			return true;
 		}else 
 			return false;
@@ -77,6 +81,10 @@ public class Register extends LogicComponent implements Pushable{
 		ldCoord.computeFrom(corner, 0, (height/4) * 3);
 		
 		outCoord.computeFrom(corner, width, height/2);
+	}
+	
+	public void tick(){
+		justTicked = true;
 	}
 	
 	
