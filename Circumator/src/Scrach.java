@@ -42,12 +42,54 @@ public class Scrach extends JFrame {
 	 * */
 	public void paint(Graphics g) {
 		 	for (String IDw: m.wire.keySet())
-			  m.wire.get(IDw).paintWInfo(g);
+			  m.wire.get(IDw).paint(g);
 			for(String ID : m.comp.keySet())
 				  m.comp.get(ID).paint(g);
-			animate(g);
+			simulate(g);
 	 }
 	 
+	public static void simulate(Graphics g){
+		ArrayList<WNode> startFilter = new ArrayList<WNode>();
+		for (WNode starting: m.start.keySet()){
+			if (m.start.get(starting) != null){
+				starting.setReady(true);
+				startFilter.add(starting);
+			}
+		}
+		for(int i = 0; i < 4; i++){
+			System.out.println("Clock cycle: " + i);
+			//set driver signals for this clock cycle
+			for(WNode s : startFilter){
+				s.setSignalVal(m.start.get(s).get(i));
+				if (s.isWStart() && s.hasWire())//push signal accross the wire
+					s.getWire().pushSignal();
+			}
+			
+			for(int j = 0; j < gateWithDeph.size(); j++){
+				try{
+					for (LogicComponent c : gateWithDeph.get(j)){
+						if (c.pushSignal()){
+							for(WNode o: c.getOutputs())
+								if (o.isWStart() && o.hasWire())//push signal accross the wire
+									o.getWire().pushSignal();
+							c.pass(g);
+							Thread.sleep(1000);
+						}
+					}
+					} catch (InterruptedException e) {
+					e.printStackTrace();}
+			}
+			m.clock.tick();
+			clearAnimation(g);
+		}
+			
+	}
+	
+	public static void clearAnimation(Graphics g){
+		for (LogicComponent c:m.comp.values() )
+			c.clearAnimation(g);
+	}
+	
 	 public static void animate(Graphics g){
 		 try{
 		 Thread.sleep(delay);
@@ -55,7 +97,7 @@ public class Scrach extends JFrame {
 				e.printStackTrace();
 		 }
 		 
-		 for(int i = 0; i < m.comp.size(); i++){
+		 for(int i = 0; i < gateWithDeph.size(); i++){
 			 try{
 				for (LogicComponent a : gateWithDeph.get(i))
 					a.pass(g);
@@ -63,7 +105,7 @@ public class Scrach extends JFrame {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			}			
+			}
 	 }
 	 
 	 /**Builds and displays on LUI the gateWithDepth matrix

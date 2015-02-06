@@ -90,6 +90,10 @@ public class  WNode {
 		return signal_value;
 	}
 	
+	public void setSignalVal(boolean val){
+		signal_value.setValue(val);
+	}
+	
 	public void setSignal(Signal s){
 		signal_value = s;
 	}

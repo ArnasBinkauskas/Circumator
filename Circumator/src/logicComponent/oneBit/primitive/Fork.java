@@ -58,6 +58,12 @@ public class Fork extends OneMany implements Pushable{
 	 }
 	
 	 @Override
+	 public void clearAnimation(Graphics g){
+		 g.setColor(Color.black);
+		 g.fillOval(center.getX() - radius/2,center.getY() - radius/2, radius, radius);
+	 }
+	 
+	 @Override
 	 public void pass(Graphics g){
 			 g.setColor(Color.green);
 			 g.fillOval(center.getX() - radius/2,center.getY() - radius/2, radius, radius);
