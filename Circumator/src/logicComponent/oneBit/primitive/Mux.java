@@ -58,8 +58,11 @@ public class Mux extends LogicComponent implements Pushable{
 			Signal inData0 = input.get("d0").getSignal();
 			Signal inData1 = input.get("d1").getSignal();
 			Signal out = output.get("out").getSignal();
-			out.setValue(inLd.getValue() && inData0.getValue() ||
-						 (!inLd.getValue()) && inData1.getValue());
+			if (inLd.getValue())
+				out.setValue(inData1.getValue());
+			else 
+				out.setValue(inData0.getValue());
+			
 			out.setGateDelay(pathDeph + gateDelay);
 			return true;
 		}else 

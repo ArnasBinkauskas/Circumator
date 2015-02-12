@@ -124,7 +124,7 @@ public class LogicComponent implements Pushable {
 	 public void pass(Graphics g){
 		 if (painted < gateDelay){
 			 g.setColor(Color.green);
-			 g.fillRect(center.getX() - 20 + 10*painted, center.getY() -5, 10, 10);
+			 g.fillRect(center.getX() - 20, center.getY() -5, 10 + 10*painted, 10);
 			 painted++;
 		 }
 		// g.setColor(Color.black);

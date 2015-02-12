@@ -62,6 +62,7 @@ public class CircuitDraw extends JPanel implements ActionListener {
     }
     else {
     	frame(g2d, animationStep);
+ 	   	values(g);
     }
     
   }
@@ -75,7 +76,6 @@ public class CircuitDraw extends JPanel implements ActionListener {
 						o.getWire().pushSignal();
 				c.pass(g);
 			}
-	   values(g);
   	}
   }
   
