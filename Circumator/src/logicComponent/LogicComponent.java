@@ -115,8 +115,10 @@ public class LogicComponent implements Pushable {
 	 }
 	 
 	 public void clearAnimation(Graphics g){
-		 g.clearRect(center.getX() - 20, center.getY() -5, 10*gateDelay, 10);
-		 paint(g);
+		 g.setColor(Color.black);
+		 g.clearRect(center.getX() - 19, center.getY() -10, 34, 19);
+		 g.drawString(label, center.getX() - 8, center.getY() + 4);
+		 painted = 0;
 	 }
 	 
 	 public void pass(Graphics g){
@@ -125,7 +127,8 @@ public class LogicComponent implements Pushable {
 			 g.fillRect(center.getX() - 20 + 10*painted, center.getY() -5, 10, 10);
 			 painted++;
 		 }
-		 paint(g);
+		// g.setColor(Color.black);
+		// g.drawString(label, center.getX() - 8, center.getY() + 4);
 	 }
 }
 				

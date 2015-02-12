@@ -30,6 +30,9 @@ public class Scrach extends JFrame {
 		super(m.CircuitName);
 		setSize(m.windowSize.getX() + 100, m.windowSize.getY() + 50);
 		setVisible(true);
+		this.setResizable(false);
+		this.setAlwaysOnTop(true);
+		this.setUndecorated(true);
 		addWindowListener(new WindowAdapter()
 		       {public void windowClosing(WindowEvent e)
 		          {dispose(); System.exit(0);}
@@ -56,7 +59,7 @@ public class Scrach extends JFrame {
 				startFilter.add(starting);
 			}
 		}
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < m.numberOfClockCycles; i++){
 			System.out.println("Clock cycle: " + i);
 			//set driver signals for this clock cycle
 			for(WNode s : startFilter){
@@ -73,9 +76,9 @@ public class Scrach extends JFrame {
 								if (o.isWStart() && o.hasWire())//push signal accross the wire
 									o.getWire().pushSignal();
 							c.pass(g);
-							Thread.sleep(1000);
 						}
 					}
+					Thread.sleep(500);
 					} catch (InterruptedException e) {
 					e.printStackTrace();}
 			}
@@ -90,24 +93,7 @@ public class Scrach extends JFrame {
 			c.clearAnimation(g);
 	}
 	
-	 public static void animate(Graphics g){
-		 try{
-		 Thread.sleep(delay);
-		 }catch(InterruptedException e) {
-				e.printStackTrace();
-		 }
-		 
-		 for(int i = 0; i < gateWithDeph.size(); i++){
-			 try{
-				for (LogicComponent a : gateWithDeph.get(i))
-					a.pass(g);
-				Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-	 }
-	 
+ 
 	 /**Builds and displays on LUI the gateWithDepth matrix
 	  * This is later used in the simulation and animation of the circuit
 	  * */

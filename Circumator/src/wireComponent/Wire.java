@@ -88,5 +88,19 @@ public class Wire implements Pushable {
 	    end.paint(g);
 	    g.drawLine(from.getX(), from.getY(), to.getX(), to.getY());
  }
+	public void paintWValues(Graphics g){
+		g.setColor(Color.black);
+	    Point from = start.getCordinates();
+	    start.paintValue(g);
+	    Point to;
+	    for (Point buffer : wireCoords){
+	    	to = buffer;
+	    	g.drawLine(from.getX(), from.getY(), to.getX(), to.getY());
+	    	from = to;
+	    }
+	    to = end.getCordinates();
+	    end.paintValue(g);
+	    g.drawLine(from.getX(), from.getY(), to.getX(), to.getY());
+	}
 	 
 }

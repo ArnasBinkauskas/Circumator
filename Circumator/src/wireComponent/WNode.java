@@ -113,5 +113,13 @@ public class  WNode {
 	 public void paint(Graphics g) {
 		    g.setColor(Color.black);
 		    g.drawString(nodeID, coordinates.getX() - 5, coordinates.getY() - 2);
-	 }	    
+	 }	   
+	 
+	 public void paintValue(Graphics g){
+		 g.setColor(Color.black);
+		 if (this.signal_value.getValue())
+			 g.drawString("1", coordinates.getX() - 2, coordinates.getY() - 2);
+		 else
+			 g.drawString("0", coordinates.getX() - 2, coordinates.getY() - 2);
+	 }
 }

@@ -22,6 +22,7 @@ public class Model {
 	HashMap<String, LogicComponent> comp;
 	HashMap<WNode, ArrayList<Boolean>> start;
 	ArrayList<WNode> end;
+	int numberOfClockCycles;
 	
 	Point windowSize;
 	
@@ -37,7 +38,7 @@ public class Model {
 		wire = new HashMap<String, Wire>();
 		comp = new HashMap<String, LogicComponent>();
 		start = new HashMap<WNode, ArrayList<Boolean>>();
-		
+		numberOfClockCycles = 0;
 		Scanner sc = new Scanner(new File(filename));
 		CircuitName = sc.nextLine();
 		if (sc.nextLine().equals("clock")){
@@ -248,11 +249,12 @@ public class Model {
 		for(int i = 1; i < nodeLine.length; i ++)
 			valueOnCycle.add(valueHelp(nodeLine[i]));
 		start.put(node.get(nodeLine[0]), valueOnCycle);
+		numberOfClockCycles = valueOnCycle.size();
 	}
 	
 	public boolean valueHelp(String a){
 		boolean ans = false;
-		ans = a.equals(1);
+		ans = a.equals("1");
 		return ans;
 	}
 	
