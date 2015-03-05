@@ -20,7 +20,6 @@ import logicComponent.LogicComponent;
 public class CircuitDraw extends JPanel implements ActionListener {
   static Timer timer;
   Model m;
-  ArrayList<ArrayList<LogicComponent>> gateWithDeph;
   ArrayList<WNode> startFilter;
   private static final String START = "Start";
   private static final String STOP = "Stop";
@@ -35,7 +34,6 @@ public class CircuitDraw extends JPanel implements ActionListener {
     timer.start();
     m = new Model();
 	m.readFile(filename);
-	build();
 	startFilter = new ArrayList<WNode>();
 	for (WNode starting: m.start.keySet()){
 		if (m.start.get(starting) != null){
@@ -43,7 +41,7 @@ public class CircuitDraw extends JPanel implements ActionListener {
 			startFilter.add(starting);
 		}
 	}
-	animationBound = gateWithDeph.size() - 1;
+	animationBound = m.gateWithDeph.size() - 1;
 	animationStep = 0;
 	clockCount = -1;
   }
@@ -75,7 +73,7 @@ public class CircuitDraw extends JPanel implements ActionListener {
   
   public void frame(Graphics g, int x){
 	  plainComponents(g);
-	  for (LogicComponent c : gateWithDeph.get(x)){
+	  for (LogicComponent c : m.gateWithDeph.get(x)){
 			if (c.animate(g)){
 				for(WNode o: c.getOutputs())
 					if (o.isWStart() && o.hasWire())//push signal accross the wire
@@ -102,44 +100,7 @@ public class CircuitDraw extends JPanel implements ActionListener {
 		  n.getSignal().setValue(m.start.get(n).get(clockCycle));
   }
   
-  public void build(){
-		//The size will be the number of components in worst case(Linear circuit)
-		gateWithDeph = new ArrayList<ArrayList<LogicComponent>>();
-		for(int i = 0; i < m.comp.size() + 4; i++)
-			gateWithDeph.add(new ArrayList<LogicComponent>());
-		
-		ArrayDeque<WNode> readyNodes = new ArrayDeque<WNode>();
-		//instanciate simulation
-		for (WNode starting: m.start.keySet()){
-			starting.setReady(true);
-			readyNodes.add(starting);
-		}
-		m.clock.tick();
-		
-		WNode buffer;
-		while (!readyNodes.isEmpty()){
-			buffer = readyNodes.poll();
-			if (buffer.isWStart() && buffer.hasWire()){//push signal accross the wire
-				buffer.getWire().pushSignal();
-				readyNodes.add(buffer.getWire().getEnd());
-			}else if (buffer.isWEnd() && buffer.hasComponent() && buffer.getComponent().pushSignal()){ 
-					readyNodes.removeAll(buffer.getComponent().getInputs());
-					readyNodes.addAll(buffer.getComponent().getOutputs());
-					int gateDelay = buffer.getComponent().gateDelay;
-					while (gateDelay >= 0){
-						gateWithDeph.get(buffer.getComponent().pathDeph + gateDelay).add(buffer.getComponent());
-						gateDelay --;
-						System.out.println();
-					}
-				}
-		}
-		for(int i = 0; i < gateWithDeph.size(); i++){
-			System.out.print("" + i + " ");
-			for (LogicComponent a : gateWithDeph.get(i))
-				System.out.print(a.toString() + " ; ");
-			System.out.println();
-		}			
-	}
+ 
 
   public static void main(String[] args) throws Exception {
 	JPanel contentPane = new JPanel(new BorderLayout());

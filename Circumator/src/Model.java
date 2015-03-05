@@ -23,6 +23,7 @@ public class Model {
 	HashMap<WNode, ArrayList<Boolean>> start;
 	ArrayList<WNode> end;
 	int numberOfClockCycles;
+	ArrayList<ArrayList<LogicComponent>> gateWithDeph;
 	
 	Point windowSize;
 	
@@ -59,7 +60,7 @@ public class Model {
 		sc.nextLine(); sc.nextLine();
 		parseForEnd(sc.nextLine());
 		sc.close();
-		
+		build();
 	}
 	
 	public void parseForNodes(String raw){
@@ -265,6 +266,45 @@ public class Model {
 		windowSize.increaseTo(temp);
 		return temp;
 	}
+	
+	 public void build(){
+			//The size will be the number of components in worst case(Linear circuit)
+			gateWithDeph = new ArrayList<ArrayList<LogicComponent>>();
+			for(int i = 0; i < comp.size() + 4; i++)
+				gateWithDeph.add(new ArrayList<LogicComponent>());
+			
+			ArrayDeque<WNode> readyNodes = new ArrayDeque<WNode>();
+			//instanciate simulation
+			for (WNode starting: start.keySet()){
+				starting.setReady(true);
+				readyNodes.add(starting);
+			}
+			clock.tick();
+			
+			WNode buffer;
+			while (!readyNodes.isEmpty()){
+				buffer = readyNodes.poll();
+				if (buffer.isWStart() && buffer.hasWire()){//push signal accross the wire
+					buffer.getWire().pushSignal();
+					readyNodes.add(buffer.getWire().getEnd());
+				}else if (buffer.isWEnd() && buffer.hasComponent() && buffer.getComponent().pushSignal()){ 
+						readyNodes.removeAll(buffer.getComponent().getInputs());
+						readyNodes.addAll(buffer.getComponent().getOutputs());
+						int gateDelay = buffer.getComponent().gateDelay;
+						while (gateDelay >= 0){
+							gateWithDeph.get(buffer.getComponent().pathDeph + gateDelay).add(buffer.getComponent());
+							gateDelay --;
+							System.out.println();
+						}
+					}
+			}
+			for(int i = 0; i < gateWithDeph.size(); i++){
+				System.out.print("" + i + " ");
+				for (LogicComponent a : gateWithDeph.get(i))
+					System.out.print(a.toString() + " ; ");
+				System.out.println();
+			}			
+		}
 		
 }
 
