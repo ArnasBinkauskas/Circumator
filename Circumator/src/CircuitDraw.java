@@ -21,8 +21,6 @@ public class CircuitDraw extends JPanel implements ActionListener {
   static Timer timer;
   Model m;
   ArrayList<WNode> startFilter;
-  private static final String START = "Start";
-  private static final String STOP = "Stop";
   int delay = 2000;
   int animationStep;
   int animationBound;
@@ -30,7 +28,7 @@ public class CircuitDraw extends JPanel implements ActionListener {
 
   public CircuitDraw(String filename) throws Exception{
     timer = new Timer(delay, this);
-    timer.setInitialDelay(1000);
+    timer.setInitialDelay(100);
     timer.start();
     m = new Model();
 	m.readFile(filename);
@@ -68,7 +66,6 @@ public class CircuitDraw extends JPanel implements ActionListener {
     	frame(g2d, animationStep);
  	   	values(g);
     }
-    
   }
   
   public void frame(Graphics g, int x){
@@ -98,36 +95,6 @@ public class CircuitDraw extends JPanel implements ActionListener {
 	  //System.out.println(m.start.values().toString());
 	  for (WNode n : startFilter)
 		  n.getSignal().setValue(m.start.get(n).get(clockCycle));
-  }
-  
- 
-
-  public static void main(String[] args) throws Exception {
-	JPanel contentPane = new JPanel(new BorderLayout());
-	CircuitDraw c = new CircuitDraw(args[0]);
-    JButton run = new JButton(STOP);
-    run.addActionListener(new ActionListener() {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String cmd = e.getActionCommand();
-            if (STOP.equals(cmd)) {
-                timer.stop();
-                run.setText(START);
-            } else {
-                timer.start();
-                run.setText(STOP);
-            }
-        }
-    });
-    contentPane.add(run, BorderLayout.NORTH);
-    contentPane.add(c, BorderLayout.CENTER);
-    JFrame frame = new JFrame("FontSizeAnimation");
-    frame.add(contentPane);
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setSize(c.m.windowSize.getX() + 100, c.m.windowSize.getY() + 100);
-    frame.setLocationRelativeTo(null);
-    frame.setVisible(true);
   }
 
   public void actionPerformed(ActionEvent e) {

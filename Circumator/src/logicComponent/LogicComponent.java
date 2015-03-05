@@ -91,6 +91,9 @@ public class LogicComponent implements Pushable {
 		n.plugTo(this);
 		output.put(out_name, n);
 	}
+	public boolean hasDelay(){
+		return (gateDelay != 0);
+	}
 	
 	/**TODO implement this for high level circuits
 	 * Must check that all input nodes are ready, if so:

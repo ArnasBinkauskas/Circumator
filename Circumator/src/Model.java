@@ -290,11 +290,16 @@ public class Model {
 				}else if (buffer.isWEnd() && buffer.hasComponent() && buffer.getComponent().pushSignal()){ 
 						readyNodes.removeAll(buffer.getComponent().getInputs());
 						readyNodes.addAll(buffer.getComponent().getOutputs());
-						int gateDelay = buffer.getComponent().gateDelay;
-						while (gateDelay >= 0){
-							gateWithDeph.get(buffer.getComponent().pathDeph + gateDelay).add(buffer.getComponent());
-							gateDelay --;
-							System.out.println();
+						int counter;
+						if (buffer.getComponent().hasDelay()){
+							counter = buffer.getComponent().gateDelay - 1;
+							while (counter >= 0){
+								gateWithDeph.get(buffer.getComponent().pathDeph + counter + 1).add(buffer.getComponent());
+								counter --;
+							}
+						}
+						else {
+							gateWithDeph.get(buffer.getComponent().pathDeph).add(buffer.getComponent());
 						}
 					}
 			}
