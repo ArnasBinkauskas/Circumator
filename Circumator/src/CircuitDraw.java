@@ -21,14 +21,14 @@ public class CircuitDraw extends JPanel implements ActionListener {
   static Timer timer;
   Model m;
   ArrayList<WNode> startFilter;
-  int delay = 2000;
+  int delay = 500;
   int animationStep;
   int animationBound;
   int clockCount;
 
   public CircuitDraw(String filename) throws Exception{
     timer = new Timer(delay, this);
-    timer.setInitialDelay(100);
+    timer.setInitialDelay(10);
     timer.start();
     m = new Model();
 	m.readFile(filename);
