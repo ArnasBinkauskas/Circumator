@@ -57,9 +57,11 @@ public class Demux extends LogicComponent implements Pushable{
 			Signal inData = input.get("d").getSignal();
 			Signal out0 = output.get("out0").getSignal();
 			Signal out1 = output.get("out1").getSignal();
-			out0.setValue(inLd.getValue() && inData.getValue());
+			if (inLd.getValue())
+				out1.setValue(inData.getValue());
+			else 
+				out0.setValue(inData.getValue());
 			out0.setGateDelay(pathDeph + gateDelay);
-			out1.setValue((!inLd.getValue()) && inData.getValue());
 			out1.setGateDelay(pathDeph + gateDelay);
 			return true;
 		}else 

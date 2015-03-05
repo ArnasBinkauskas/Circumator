@@ -38,6 +38,7 @@ public class Register extends LogicComponent implements Pushable, Clocked{
 		justTicked = false;
 		label = "Reg";
 		gateDelay = 3;
+		painted = 0;
 		ID = gateID;
 		plugInput(data, "d");
 		plugInput(ldControl, "ldc");

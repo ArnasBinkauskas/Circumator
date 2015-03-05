@@ -70,7 +70,11 @@ public class LogicComponent implements Pushable {
 	
 	public void setGateDelay(int value){
 		gateDelay = value;
-		painted = gateDelay - 1;
+		resetAnimation();
+	}
+	
+	public void resetAnimation(){
+		painted = 0;
 	}
 	/**
 	 *  Plugs a node into specific input slot
@@ -110,8 +114,16 @@ public class LogicComponent implements Pushable {
 		return true;
 	}
 	
+	
 	//TODO appropriate graph
 	 public void paint(Graphics g) {
+	 }
+	 
+	 public boolean animate(Graphics g){
+		 pass(g);
+		 if (painted == gateDelay)
+			 pushSignal();
+		 return (painted == gateDelay);
 	 }
 	 
 	 public void clearAnimation(Graphics g){
@@ -127,8 +139,6 @@ public class LogicComponent implements Pushable {
 			 g.fillRect(center.getX() - 20, center.getY() -5, 10 + 10*painted, 10);
 			 painted++;
 		 }
-		// g.setColor(Color.black);
-		// g.drawString(label, center.getX() - 8, center.getY() + 4);
 	 }
 }
 				
