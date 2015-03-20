@@ -3,8 +3,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JFileChooser;
 
 
 
@@ -14,8 +16,10 @@ public class Circumator {
 	 
 	 public static void main(String[] args) throws Exception {
 			JPanel contentPane = new JPanel(new BorderLayout());
-			CircuitDraw c = new CircuitDraw(args[0]);
-		    JButton run = new JButton(STOP);
+			JFileChooser fc = new JFileChooser();
+			fc.showOpenDialog(null);
+			final CircuitDraw c = new CircuitDraw(fc.getSelectedFile().getAbsolutePath());
+		    final JButton run = new JButton(STOP);
 		    run.addActionListener(new ActionListener() {
 
 		        @Override
