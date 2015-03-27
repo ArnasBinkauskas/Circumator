@@ -65,7 +65,7 @@ public class Register extends LogicComponent implements Pushable, Clocked{
 			if (inLd.getValue())
 				memory.setValue(inData.getValue());
 			out.setValue(memory.getValue());
-			out.setGateDelay(pathDeph + gateDelay);
+			out.setPathDepth(pathDeph + gateDelay);
 			justTicked = false;
 			return true;
 		}else 

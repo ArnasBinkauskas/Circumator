@@ -108,8 +108,8 @@ public class LogicComponent implements Pushable {
 			if (!in.isReady()){
 				return false;
 			}
-			if (maxInDelay < in.getSignal().getGateDelay())
-				maxInDelay = in.getSignal().getGateDelay();
+			if (maxInDelay < in.getSignal().getPathDepth())
+				maxInDelay = in.getSignal().getPathDepth();
 		}
 		for (WNode out: output.values())
 			out.setReady(true);

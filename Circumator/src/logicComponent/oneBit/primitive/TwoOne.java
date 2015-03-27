@@ -59,9 +59,9 @@ public abstract class TwoOne extends LogicComponent implements Pushable{
 		WNode out = output.get("u");
 		boolean inputsReady = inX.isReady() && inY.isReady();
 		if (inputsReady){
-			int signalPathDeph = Math.max(inX.getSignal().getGateDelay(), inY.getSignal().getGateDelay());
+			int signalPathDeph = Math.max(inX.getSignal().getPathDepth(), inY.getSignal().getPathDepth());
 			pathDeph = signalPathDeph;
-			out.getSignal().setGateDelay(signalPathDeph + gateDelay);
+			out.getSignal().setPathDepth(signalPathDeph + gateDelay);
 			out.setReady(true);
 		}
 		return inputsReady;

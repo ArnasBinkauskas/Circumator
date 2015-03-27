@@ -30,7 +30,7 @@ public class Wire implements Pushable {
 	public boolean pushSignal(){
 		if (start.isReady()){
 			end.setSignal(start.getSignal());
-			end.getSignal().setGateDelay(start.getSignal().getGateDelay());
+			end.getSignal().setPathDepth(start.getSignal().getPathDepth());
 			end.setReady(true);
 			return true;
 		}else 

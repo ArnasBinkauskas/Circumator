@@ -66,11 +66,11 @@ public class OneMany extends LogicComponent implements Pushable{
 	public boolean pushSignal(){
 		WNode inX = input.get("x");
 		if (inX.isReady()){
-			pathDeph = inX.getSignal().getGateDelay(); 
+			pathDeph = inX.getSignal().getPathDepth(); 
 			Iterator outNode = output.values().iterator();
 			while (outNode.hasNext()){
 				WNode nextBranch = (WNode)outNode.next();
-				nextBranch.getSignal().setGateDelay(inX.getSignal().getGateDelay() + gateDelay);
+				nextBranch.getSignal().setPathDepth(inX.getSignal().getPathDepth() + gateDelay);
 				nextBranch.setReady(true);
 				}
 			return true;

@@ -60,8 +60,8 @@ public abstract class OneOne extends LogicComponent implements Pushable {
 		WNode in = input.get("in");
 		WNode out = output.get("out");
 		if (in.isReady()){
-			pathDeph = in.getSignal().getGateDelay();
-			out.getSignal().setGateDelay(pathDeph + gateDelay);
+			pathDeph = in.getSignal().getPathDepth();
+			out.getSignal().setPathDepth(pathDeph + gateDelay);
 			out.setReady(true);
 			return true;
 		}else 
